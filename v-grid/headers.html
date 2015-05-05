@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>v-grid Code Examples. Formating data</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../demo.css">
+  <script src="https://cdn.vaadin.com/vaadin-components/0.2-snapshot/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="common.html">
+  <style>
+    td.red, th.red, .red th, .red td, td.foot1, .foot1 td {
+      background: mistyrose !important;
+    }
+    td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
+      background: aliceblue !important;
+    }
+    .foot1, .foot2, .bold th {
+      font-weight: bold !important;
+      text-align: center;
+    }
+    .small th {
+      font-size: 12px !important;
+    }
+  </style>  
+</head>
+
+<body>
+  <section>
+    <h1>v-grid
+      <span>Headers and Footers</span>
+    </h1>
+    <table-of-contents select="h3" class="toc"></table-of-contents>
+  </section>
+
+  <section>
+    <h3 id="headers">Formating Headers in DOM</h3>
+    <p>Cells in headers can be customized in the <code>thead</code> element, and footers using the <code>tfoot</code> section</p>
+    <p>The <code>colgroup</code> element can be used to customize columns</p>
+    <code-example>
+      <v-grid demo>
+        <table>
+          <colgroup><col><col><col></colgroup>
+          <thead>
+            <tr class="blue">
+              <th><button>I'm a button</button></th>
+              <th colspan="2">Status</th>
+            </tr>
+            <tr class="red bold" default>
+              <th>Name</th>
+              <th class="blue">Value</th>
+              <th>Progress</th>
+            </tr>
+            <tr class="small">
+              <th>Project name</th>
+              <th>In Euro</th>
+              <th>Percentage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Project A</td><td>10000</td><td>0.8</td>
+            </tr>
+            <tr>
+              <td>Project B</td><td>999999</td><td>0.8</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="foot1">
+              <th colspan=3>This is a footer line in a cell</th>
+            </tr>
+            <tr class="foot2">
+              <th colspan=3><span>Some widgets in a footer</span> <input type=text/> <button>Click</button></th>
+            </tr>
+          </tfoot>          
+        </table>
+      </v-grid>
+    </code-example>
+  </section>
+  
+  <section>
+    <h3 id="jsheaders">Javascript API for Headers and Footers</h3>
+    <p>Use <code>grid.header</code> and <code>grid.footer</code> objects to customize Headers and Footers</p>
+    <code-example>
+      <v-grid demo>
+        <table>
+          <colgroup>
+            <col header-text="Name">
+            <col header-text="Value">
+            <col header-text="Progress">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>Project A</td><td>10000</td><td>0.8</td>
+            </tr>
+            <tr>
+              <td>Project B</td><td>999999</td><td>0.8</td>
+            </tr>
+          </tbody>
+        </table>
+      </v-grid>
+      <code demo-var="grid">
+        // Remove the header row
+        grid.header.removeRow(0);
+
+        // Add a header row
+        var colspanToggle = createButton("Toggle colspan", function(){
+          var cell = grid.header.getCell(0, 0);
+          cell.colspan = cell.colspan == 1 ? 2 : 1;
+        });
+        grid.header.addRow(0, [colspanToggle, "Value"]);
+
+        // Add a footer row
+        grid.footer.addRow(0, ["sum", 11000]);
+
+        // Toggle header visibility
+        grid.parentNode.appendChild(createButton('Toggle header', function(){
+          grid.header.hidden = !grid.header.hidden;
+        }));
+        // Toggle footer visibility
+        grid.parentNode.appendChild(createButton('Toggle footer', function(){
+          grid.footer.hidden = !grid.footer.hidden;
+        }));
+      </code>      
+    </code-example>
+  </section>
+</body>
+
+</html>
