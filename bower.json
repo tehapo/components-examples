@@ -1,0 +1,25 @@
+{
+  "name": "Components examples",
+  "version": "0.0.1",
+  "authors": [
+    "Vaadin Ltd"
+  ],
+  "keywords": [
+    "web-components",
+    "vaadin"
+  ],
+  "license": "Apache License 2.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "code-example": "~0.0.1",
+    "polymer": "Polymer/polymer#v0.8.0-rc.4",
+    "table-of-contents": "*"
+  }
+}
