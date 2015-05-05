@@ -11,7 +11,7 @@
   }
 
   .demo-wrapper {
-    min-width: 40%;
+    width: 40%;
   }
 
   .code {
@@ -20,7 +20,7 @@
     font-size: 12px;
     line-height: 1.3;
     padding-left: 2em;
-    width: 100%;
+    width: 60%;
   }
 
   .code code {
@@ -59,9 +59,15 @@ CodeExample = Polymer({
     var code = Polymer.dom(this).node.querySelector(".code");
     var demoComponent = Polymer.dom(this).node.querySelector(".demo-wrapper").querySelector("[demo]");
 
+    function unIdent(h) {
+      var spaces = h.replace(/^[^\n]*\n*(\s+)[\s\S]*/, '$1');
+      return h.replace(/\t/g, "  ").replace(/\s+$/mg, "").replace(new RegExp("^" + spaces, "mg"), "");
+    }
+
     if(demoComponent.getAttribute("hidden") == null) {
       code.innerHTML = "<code class='language-markup'></code>"
-      code.firstChild.textContent = Polymer.dom(this).node.querySelector(".demo-wrapper").innerHTML.replace(/^\s+/,"").replace(/\s+$/,"").replace(" demo=\"\"","");
+      var htmlContent = Polymer.dom(this).node.querySelector(".demo-wrapper").innerHTML.toString();
+      code.firstChild.textContent = unIdent(htmlContent).replace(" demo=\"\"","");
       Prism.highlightElement(code.firstChild);
     }
 
@@ -72,12 +78,12 @@ CodeExample = Polymer({
       var c = Polymer.dom(this).node.lightChildren[i];
       if(c.nodeName == "CODE") {
         var script = document.createElement("script");
-        var scriptContent = c.innerHTML;
+        var scriptContent = c.textContent;
 
         if(c.getAttribute("hidden") == null) {
           var scriptCode = document.createElement("code");
           scriptCode.className = "language-javascript";
-          scriptCode.textContent = scriptContent.replace(/^\s+/,"").replace(/\s+$/,"")
+          scriptCode.textContent = unIdent(scriptContent);
           code.appendChild(scriptCode);
           Prism.highlightElement(scriptCode);
         }
