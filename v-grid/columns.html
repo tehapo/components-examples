@@ -2,27 +2,21 @@
 <html>
 
 <head>
-  <title>v-grid Code Examples</title>
+  <title>v-grid Code Examples. Columns</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../demo.css">
-  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../bower_components/vaadin-components/vaadin-grid/vaadin-grid.html">
-  <link rel="import" href="../bower_components/code-example/code-example.html">
-  <link rel="import" href="../bower_components/table-of-contents/table-of-contents.html">
+  <script src="https://cdn.vaadin.com/vaadin-components/0.2-snapshot/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="common.html">
 </head>
 
 <body>
-
   <section>
     <h1>v-grid
       <span>Columns</span>
     </h1>
-
     <table-of-contents select="h3" class="toc"></table-of-contents>
   </section>
-
-
 
   <section>
     <h3 id="define">Defining columns</h3>
@@ -32,25 +26,25 @@
       <code>tbody</code>, in order to render something.</p>
     <p>Read the <a href="#">column API documentation</a> to see all the attributes and properties you can define for a column.</p>
     <code-example>
-<v-grid demo>
-  <table>
-    <colgroup>
-      <col header-text="First column">
-        <col header-text="Second column">
-    </colgroup>
-    <tbody>
-      <tr>
-        <td>One</td>
-        <td>Two</td>
-      </tr>
-    </tbody>
-  </table>
-</v-grid>
+      <v-grid demo>
+        <table>
+          <colgroup>
+            <col header-text="First column">
+              <col header-text="Second column">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>One</td>
+              <td>Two</td>
+            </tr>
+          </tbody>
+        </table>
+      </v-grid>
       <code demo-var="grid">
-grid.columns = [
-  { headerContent: "First column" },
-  { headerContent: "Second column" }
-];
+        grid.columns = [
+          { headerContent: "First column" },
+          { headerContent: "Second column" }
+        ];
       </code>
     </code-example>
   </section>
@@ -67,12 +61,12 @@ grid.columns = [
         grid.data.source = [["One", "Two"]];
       </code>
       <code demo-var="grid">
-grid.addColumn({ headerContent: "Column one" });
+        grid.addColumn({ headerContent: "Column one" });
 
-// Specify the index or name of the column before which to add the new column
-grid.then(function() {
-  grid.addColumn({ headerContent: "I’m First"}, 0);
-});
+        // Specify the index or name of the column before which to add the new column
+        grid.then(function() {
+          grid.addColumn({ headerContent: "I’m First"}, 0);
+        });
       </code>
     </code-example>
   </section>
