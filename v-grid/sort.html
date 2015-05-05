@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>v-grid Code Examples. DOM API</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../demo.css">
+  <script src="https://cdn.vaadin.com/vaadin-components/0.2-snapshot/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="common.html">
+</head>
+
+<body>
+  <section>
+    <h1>v-grid
+      <span>Sorting Data</span>
+    </h1>
+    <table-of-contents select="h3" class="toc"></table-of-contents>
+  </section>
+
+  <section>
+    <h3 id="sort">Sorting Data</h3>
+    <p>Although grid can be configured to show sorting arrows in headers, the developer is responsible
+    to provide the appropriate handles for for sorting the data  
+    </p>
+    <code-example>
+      <v-grid demo>
+        <table>
+          <colgroup>
+            <col header-text="Name" sortable><col header-text="Value" sortable><col header-text="Progress" sortable>
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid">
+          var data = [ [ "Project A", 10000, 0.8 ],
+                       [ "Project D", 999999, 0.2 ],
+                       [ "Project C", 43256, 0.01 ],
+                       [ "Project E", 1967, 0.9 ],
+                       [ "Project B", 19672, 1 ] ];
+
+          var dir = 'desc';
+          
+          var button = createButton('Sort', function(){
+            dir = dir == 'desc' ? "asc" : "desc";
+            grid.data.sortOrder = [{
+              column: 1,
+              direction: dir
+            }];
+          });
+          grid.parentNode.appendChild(button)
+
+          var label = document.createElement("div");
+          grid.parentNode.appendChild(label)
+
+          grid.addEventListener('sort', function() {
+            var idx = grid.data.sortOrder[0].column;
+            var asc = grid.data.sortOrder[0].direction == 'asc';
+            data.sort(function(a, b) {
+              return a[idx] < b[idx] && asc ? -1 : 1;
+            });
+            label.textContent = JSON.stringify(grid.data.sortOrder);
+          });
+
+          grid.data.source = function(req) {
+            req.success(data.slice(req.index, req.index + req.count), data.length);
+          };
+      </code>
+    </code-example>
+  </section>
+ 
+</body>
+</html>
