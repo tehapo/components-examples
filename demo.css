@@ -45,3 +45,8 @@ p {
 section {
   margin-bottom: 6em;
 }
+
+button {
+  line-height: 1.55;
+  margin: 9px;
+}
