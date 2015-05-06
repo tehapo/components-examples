@@ -19,7 +19,7 @@
     </h1>
     <table-of-contents select="h3" class="toc"></table-of-contents>
   </section>
-  
+
   <section>
     <h3 id="inline">Inline Data</h3>
     <p>Data can be set in the <code>tbody</code> of the <code>table</code> element.</p>
@@ -43,7 +43,7 @@
       </v-grid>
     </code-example>
   </section>
-  
+
   <section>
     <h3 id="simpleds">JavaScript Data Sources</h3>
     <p>Use JS data sources for large amount of data</p>
@@ -52,53 +52,97 @@
         <table>
           <col header-text="Name">
           <col header-text="Value">
-          <col header-text="Progress">
+          <col width=70 header-text="Progress">
         </table>
       </v-grid>
+      <code demo-var="grid" hidden>
+        function randomRow() {
+          return ["Random", Math.round(Math.random() * 1000), ~~(Math.random()*10)/10];
+        }
+      </code>
       <code demo-var="grid">
-          var data = [ [ "Project A", 10000, 0.8 ],
-                       [ "Project B", 87654, 0.2 ],
-                       [ "Project C", 12999, 0.6 ] ];
-  
-          grid.data.source = function(req) {
-            var array = data.slice(req.index, req.index + req.count);
-            req.success(array, data.length);
-          };
-              
+        var data = [ [ "Project A", 10000, 0.8 ],
+                     [ "Project B", 87654, 0.2 ],
+                     [ "Project C", 12999, 0.6 ] ];
+
+        window.d = data; window.g = grid;
+        grid.data.source = function(req) {
+          var array = data.slice(req.index, req.index + req.count);
+          req.success(array, data.length);
+        };
+        grid.parentNode.appendChild(createButton('Update', function(){
+          data[0] = randomRow();
+          grid.data.clearCache();
+        }));
+        grid.parentNode.appendChild(createButton('Add', function(){
+          data.splice(0, 0, randomRow());
+          grid.data.clearCache(data.length);
+        }));
+        grid.parentNode.appendChild(createButton('Remove', function(){
+          data.splice(0, 1);
+          grid.data.clearCache();
+        }));
       </code>
     </code-example>
   </section>
-  
+
   <section>
     <h3 id="arrayds">Single column Data Sources</h3>
     <p>You can pass primitive objects (number, boolean, string) as grid rows, and they will be displayed in a single column grid.</p>
     <code-example>
       <v-grid demo rows=5 >
         <table>
-          <col header-text="Hero">
-        </table>      
+          <col header-text="<strong>Hero Name</strong>">
+        </table>
       </v-grid>
       <code demo-var="grid">
-        var heroes = ["Steel", "Dr. Manhattan", "Batman", "Black Widow", "Rorschach", "Gambit", "Swamp Thing", "Mystique", "Ozymandias", "Bubastis", "Ozymandias", "Magneto", "Goat Faced Girl", "Aqualad", "Mister Fantastic", "Superman", "Iron Monger", "Professor X", "Namor the Sub-Mariner", "Namorita", " Rocket Raccoon", " The Penguin", "Lex Luthor", "Martian Man Hunter", "Pepper Potts", "Fin Fang Foom", "Elongated Man", "Savage Dragon", "Thing", "Thor Odinson", "The Maxx", "Deadpool", "Storm", "Sabertooth", "Jezebel Jet", "Darwin", "Sasquatch", "Abe (Abraham) Sapien", "The Goon", "Ra’s Al Ghul", "Oracle", "Hellboy", " Doctor Doom", " Solomon Grundy", "Ferro Lad"];
-        
+        var data = ["Steel", "Dr. Manhattan", "Batman", "Black Widow", "Rorschach", "Gambit", "Swamp Thing", "Mystique", "Ozymandias", "Bubastis", "Ozymandias", "Magneto", "Goat Faced Girl", "Aqualad", "Mister Fantastic", "Superman", "Iron Monger", "Professor X", "Namor the Sub-Mariner", "Namorita", " Rocket Raccoon", " The Penguin", "Lex Luthor", "Martian Man Hunter", "Pepper Potts", "Fin Fang Foom", "Elongated Man", "Savage Dragon", "Thing", "Thor Odinson", "The Maxx", "Deadpool", "Storm", "Sabertooth", "Jezebel Jet", "Darwin", "Sasquatch", "Abe (Abraham) Sapien", "The Goon", "Ra’s Al Ghul", "Oracle", "Hellboy", " Doctor Doom", " Solomon Grundy", "Ferro Lad"];
+
         grid.data.source = function(req) {
-          req.success(heroes.slice(req.index, req.index + req.count), heroes.length);
-        };          
+          req.success(data.slice(req.index, req.index + req.count), data.length);
+        };
       </code>
     </code-example>
   </section>
-  
+
+  <section>
+    <h3 id="namedds">JS objects as Data Source rows</h3>
+    <p>It is possible to map data from a JS objects into columns specifying the key of each column.</p>
+    <p>Additionally you can modify cell values using generators per column.</p>
+    <code-example>
+      <v-grid demo>
+        <table>
+          <colgroup><col><col><col></colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid">
+        var data = [ { name: "Project A", value: 10000, progress: 0.8 },
+                     { name: "Project B", value: 87654, progress: 0.2 },
+                     { name: "Project C", value: 12999, progress: 0.6 } ];
+
+        grid.data.source = function(req) {
+          req.success(data.slice(req.index, req.index + req.count), data.length);
+        };
+
+        grid.columns[0].valueGenerator = function(rowObject, columnIndex) {
+          return ">>> " + rowObject.name;
+        };
+        grid.columns[1].name = "progress";
+        grid.columns[2].name = "value";
+
+      </code>
+    </code-example>
+  </section>
 
   <section>
     <h3 id="bigds">Asynchronous Data Sources</h3>
     <p>Use the `request` callback to inform to the grid when the data is available</p>
     <p>In this example we use timeout to simulate lazy loading, move the mouse fast, and you can see how data is loaded after a while.</p>
     <code-example>
-      <v-grid demo>
+      <v-grid demo hidden>
         <table>
-          <col header-text="Name">
-          <col header-text="Surname">
-          <col header-text="Activity">
+          <colgroup><col flex=20><col flex=20><col flex=40><col flex=50></colgroup>
+          <thead><tr><th>Name</th><th>Surname</th><th colspan="2">Activity</th></tr></thead>
         </table>
       </v-grid>
       <code demo-var="grid">
@@ -106,11 +150,11 @@
           setTimeout(function() {
             req.success(myBigData.slice(req.index, req.index + req.count), myBigData.length);
           }, 400);
-        };      
+        };
       </code>
     </code-example>
-  </section>   
-  
+  </section>
+
 </body>
 
 </html>
