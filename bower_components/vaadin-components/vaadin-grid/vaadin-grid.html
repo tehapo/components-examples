@@ -37,7 +37,6 @@
        */
       editor: {
         type: Object,
-        readOnly: true,
         value: function() {
           var _this = this;
           return {
@@ -88,7 +87,6 @@
        */
       data: {
         type: Object,
-        readOnly: true,
         value: function() {
           var _this = this;
           return {
@@ -122,17 +120,8 @@
               _this.grid.setSortOrder(sortOrder);
             },
 
-            dataUpdated: function(firstIndex, itemsData) {
-              _this.grid.getDataSource().dataUpdated(firstIndex, itemsData);
-            },
-            dataRemoved: function(firstIndex, numberOfItems) {
-              _this.grid.getDataSource().dataRemoved(firstIndex, numberOfItems);
-            },
-            dataAdded: function(firstIndex, numberOfItems) {
-              _this.grid.getDataSource().dataAdded(firstIndex, numberOfItems);
-            },
-            resetData: function(estimatedNewSize) {
-              _this.grid.getDataSource().resetData(estimatedNewSize);
+            clearCache: function(estimatedNewSize) {
+              _this.grid.getDataSource().clearCache(estimatedNewSize);
             },
 
           };
@@ -147,7 +136,6 @@
        */
       header: {
         type: Object,
-        readOnly: true,
         value: function() {
           var _this = this;
           return {
@@ -181,8 +169,10 @@
             },
             set hidden(hidden) {
               _this.grid.getStaticSection().setHeaderHidden(hidden);
+            },
+            get rowCount() {
+              return _this.grid.getStaticSection().getHeaderRowCount();
             }
-
           };
         }
       },
@@ -195,7 +185,6 @@
        */
       footer: {
         type: Object,
-        readOnly: true,
         value: function() {
           var _this = this;
           return {
@@ -216,6 +205,9 @@
             },
             set hidden(hidden) {
               _this.grid.getStaticSection().setFooterHidden(hidden);
+            },
+            get rowCount() {
+              return _this.grid.getStaticSection().getFooterRowCount();
             }
           };
         }
@@ -223,7 +215,6 @@
 
       selection: {
         type: Object,
-        readOnly: true,
         value: function() {
           var _this = this;
           return {
@@ -317,9 +308,11 @@
       this.serializeValueToAttribute(this.selection.mode, "selection-mode");
     },
 
-    ready: function() {
+    created: function() {
       this.grid = new vaadin.GridComponent();
+    },
 
+    ready: function() {
       var _this = this;
       // Set read-only properties
       ["data", "editor", "header", "footer"].forEach(function(prop) {

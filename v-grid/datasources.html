@@ -2,11 +2,11 @@
 <html>
 
 <head>
-  <title>v-grid Code Examples. Columns</title>
+  <title>v-grid Code Examples – Data Sources</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../demo.css">
-  <script src="https://cdn.vaadin.com/vaadin-components/0.2-snapshot/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="common.html">
   <script src="demodata.js"></script>
 </head>
@@ -15,7 +15,7 @@
 
   <section>
     <h1>v-grid
-      <span>Using data sources</span>
+      <span>Data Sources</span>
     </h1>
     <table-of-contents select="h3" class="toc"></table-of-contents>
   </section>
@@ -50,9 +50,11 @@
     <code-example>
       <v-grid demo>
         <table>
-          <col header-text="Name">
-          <col header-text="Value">
-          <col width=70 header-text="Progress">
+          <colgroup>
+            <col header-text="Name">
+            <col header-text="Value">
+            <col width=70 header-text="Progress">
+          </colgroup>
         </table>
       </v-grid>
       <code demo-var="grid" hidden>
@@ -88,11 +90,14 @@
 
   <section>
     <h3 id="arrayds">Single column Data Sources</h3>
-    <p>You can pass primitive objects (number, boolean, string) as grid rows, and they will be displayed in a single column grid.</p>
+    <p>You can pass primitive objects (number, boolean, string) as grid rows,
+       and they will be displayed in a single column grid.</p>
     <code-example>
       <v-grid demo rows=5 >
         <table>
-          <col header-text="<strong>Hero Name</strong>">
+          <colgroup>
+           <col header-text="<strong>Hero Name</strong>">
+          </colgroup>
         </table>
       </v-grid>
       <code demo-var="grid">
@@ -136,8 +141,10 @@
 
   <section>
     <h3 id="bigds">Asynchronous Data Sources</h3>
-    <p>Use the `request` callback to inform to the grid when the data is available</p>
-    <p>In this example we use timeout to simulate lazy loading, move the mouse fast, and you can see how data is loaded after a while.</p>
+    <p>Use the `request` callback to inform to the grid when the data is
+       available</p>
+    <p>In this example we use timeout to simulate lazy loading, move the mouse
+       fast, and you can see how data is loaded after a while.</p>
     <code-example>
       <v-grid demo hidden>
         <table>

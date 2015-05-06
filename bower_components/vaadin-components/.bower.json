@@ -16,16 +16,17 @@
     "**/tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#v0.8.0-rc.4"
+    "polymer": "Polymer/polymer#v0.8.0-rc.7"
   },
   "homepage": "https://github.com/vaadin-bower/vaadin-components",
-  "_release": "8eed9d6f9f",
+  "_release": "7da1d5fff2",
   "_resolution": {
     "type": "branch",
     "branch": "0.2-snapshot",
-    "commit": "8eed9d6f9f2bda3d391a56091f7651daa91d05d4"
+    "commit": "7da1d5fff2a964992c428dcf6ed74a302b4b8280"
   },
   "_source": "git://github.com/vaadin-bower/vaadin-components.git",
   "_target": "0.2-snapshot",
-  "_originalSource": "vaadin-components"
+  "_originalSource": "vaadin-components",
+  "_direct": true
 }

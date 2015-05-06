@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * host has had a chance to set a property value on the child. The `ready`
    * method solves this problem since it's called host to child.
    *
-   * Dom distribution: To support reprojection efficiently, it's important to 
+   * Dom distribution: To support reprojection efficiently, it's important to
    * distribute from host to child in one shot. The `attachedCallback` mostly
    * goes in the desired order except for elements that are in dom to start; in
    * this case, all children are attached before the host element. Ready also
@@ -32,37 +32,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 (function() {
 
   var baseAttachedCallback = Polymer.Base.attachedCallback;
-  var baseDetachedCallback = Polymer.Base.detachedCallback;
 
-  Polymer.Base.addFeature({
+  Polymer.Base._addFeature({
 
     hostStack: [],
-    _readied: false,
-    _attachedPending: false,
-
-    // for overriding
-    configure: function() {
-    },
 
     // for overriding
     ready: function() {
-    },
-
-    /**
-      Returns the host of the local dom in which this element exists.
-      This is a shorthand for Polymer.dom(this).getOwnerRoot().host
-    */
-    get host() {
-      return this._host || (this._host = this._queryHost());
-    },
-
-    set host(value) {
-      this._host = value;
-    },
-
-    _queryHost: function(node) {
-      var ownerRoot = Polymer.dom(this).getOwnerRoot();
-      return ownerRoot && ownerRoot.host;
     },
 
     // NOTE: The concept of 'host' is overloaded. There are two different
@@ -71,16 +47,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // 2. an element hosts the elements on which it configures data.
     // Practially, these notions are almost always coincident.
     // Some special elements like templates may separate them.
-    // In order not to over-emphaisize this technical difference, we expose 
+    // In order not to over-emphaisize this technical difference, we expose
     // one concept to the user and it maps to the dom-related meaning of host.
     //
     // 1. set this element's `host` and push this element onto the `host`'s
     // list of `client` elements
-    // 2. establish this element as the current hosting element (allows 
+    // 2. establish this element as the current hosting element (allows
     // any elements we stamp to easily set host to us).
     _pushHost: function(host) {
-      this.host = host = host || 
+      // NOTE: The `dataHost` of an element never changes.
+      this.dataHost = host = host || 
         Polymer.Base.hostStack[Polymer.Base.hostStack.length-1];
+      // this.dataHost reflects the parent element who manages
+      // any bindings for the element.  Only elements originally
+      // stamped from Polymer templates have a dataHost, and this
+      // never changes
       if (host && host._clients) {
         host._clients.push(this);
       }
@@ -99,27 +80,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer.Base.hostStack.pop();
     },
 
-    _readyContent: function() {
+    _tryReady: function() {
       if (this._canReady()) {
-        this._initializeContent();
+        this._ready();
       }
     },
 
     _canReady: function() {
-      return !this._readied && (!this.host || this.host._readied);
+      return !this.dataHost || this.dataHost._clientsReadied;
     },
 
-    _initializeContent: function() {
+    _ready: function() {
+      // extension point
+      this._beforeClientsReady();
+      this._readyClients();
+      // extension point
+      this._afterClientsReady();
+      this._readySelf();
+    },
+
+    _readyClients: function() {
       // prepare root
       this._setupRoot();
       // logically distribute self
       this._beginDistribute();
-      // send data configuration signal
-      this._configure();
       // now fully prepare localChildren
       var c$ = this._clients;
       for (var i=0, l= c$.length, c; (i<l) && (c=c$[i]); i++) {
-        c._initializeContent();
+        c._ready();
       }
       // perform actual dom composition
       this._finishDistribute();
@@ -129,26 +117,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // if (!Polymer.Settings.useNativeCustomElements) {
       //   CustomElements.takeRecords();
       // }
-      // send ready signal
-      this._ready();
-      // reset _host as it needs to be established by local dom after data
-      // configuration
-      this.host = null;
+      this._clientsReadied = true;
       this._clients = null;
-    },
-
-    // calls `configure`
-    // note: called host -> localChild
-    _configure: function() {
-      this.configure();
     },
 
     // mark readied and call `ready`
     // note: called localChildren -> host
-    _ready: function() {
+    _readySelf: function() {
+      this._doBehavior('ready');
       this._readied = true;
-      this._beforeReady();
-      this.ready();
       if (this._attachedPending) {
         this._attachedPending = false;
         this.attachedCallback();
@@ -156,7 +133,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     // for system overriding
-    _beforeReady: function() {},
+    _beforeClientsReady: function() {},
+    _afterClientsReady: function() {},
 
     // normalize lifecycle: ensure attached occurs only after ready.
     attachedCallback: function() {
@@ -165,12 +143,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       } else {
         this._attachedPending = true;
       }
-    },
-
-    detachedCallback: function() {
-      // uncache host so it will be calculated again.
-      this.host = null;
-      baseDetachedCallback.call(this);
     }
 
   });

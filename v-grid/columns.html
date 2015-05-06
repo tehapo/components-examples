@@ -2,11 +2,11 @@
 <html>
 
 <head>
-  <title>v-grid Code Examples. Columns</title>
+  <title>v-grid Code Examples – Columns</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../demo.css">
-  <script src="https://cdn.vaadin.com/vaadin-components/0.2-snapshot/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="common.html">
 </head>
 
@@ -19,12 +19,14 @@
   </section>
 
   <section>
-    <h3 id="define">Defining columns</h3>
+    <h3 id="define">Defining Columns</h3>
     <p>Columns can be defined using HTML or Javascript.</p>
-    <p>For the HTML version, the
-      <code>table</code> element might seem redundant, but it is required in order for the browsers to parse the contained markup correctly. We also need to provide some data for the grid, using
-      <code>tbody</code>, in order to render something.</p>
-    <p>Read the <a href="#">column API documentation</a> to see all the attributes and properties you can define for a column.</p>
+    <p>For the HTML version, the <code>table</code> element might seem
+       redundant, but it is required in order for the browsers to parse the
+        contained markup correctly. We also need to provide some data for the
+         grid, using <code>tbody</code>, in order to render something.</p>
+    <p>Read the <a href="#">column API documentation</a> to see all the
+       attributes and properties you can define for a column.</p>
     <code-example>
       <v-grid demo>
         <table>
@@ -50,11 +52,14 @@
   </section>
 
   <section>
-    <h3 id="add">Adding columns</h3>
-    <p>Columns can be added dynamically using the Javascript API. You can also modify the lightDom of the component, it is not the recommended way.</p>
+    <h3 id="add">Adding Columns Dynamically</h3>
+    <p>Columns can be added dynamically using the JavaScript API. You can also
+       modify the lightDom of the component, but it is not the recommended
+       way.</p>
     <p>Since some of the API is asynchronous, v-grid provides the
       <code>then()</code>
-      function which can be used to trigger a callback after any pending tasks are finished (the addition of the column 'Column one' in this case).</p>
+      function which can be used to trigger a callback after any pending tasks
+       are finished (the addition of the column 'Column one' in this case).</p>
     <code-example>
       <v-grid demo hidden></v-grid>
       <code demo-var="grid" hidden>

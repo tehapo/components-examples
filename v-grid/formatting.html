@@ -2,25 +2,25 @@
 <html>
 
 <head>
-  <title>v-grid Code Examples. Formating data</title>
+  <title>v-grid Code Examples – Formatting data</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../demo.css">
-  <script src="https://cdn.vaadin.com/vaadin-components/0.2-snapshot/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="common.html">
 </head>
 
 <body>
   <section>
     <h1>v-grid
-      <span>Formating Data</span>
+      <span>Formatting Data</span>
     </h1>
     <table-of-contents select="h3" class="toc"></table-of-contents>
   </section>
 
   <section>
-    <h3 id="format">Inline formatted data</h3>
-    <p>Inline Data can be formatted using pure HTML syntax</p>
+    <h3 id="format">Inline Formatted Data</h3>
+    <p>You can place any regular HTML inside the grid cells.</p>
     <code-example>
       <v-grid demo>
         <table>
@@ -47,8 +47,8 @@
   </section>
 
   <section>
-    <h3 id="format">Defining data renderers</h3>
-    <p>Renderers are functions able to modify data and cells in the moment that a row data is bound to the grid</p>
+    <h3 id="format">Defining Data Renderers</h3>
+    <p>You can present the data of a column in any format using a renderer function.</p>
     <code-example>
       <v-grid demo>
         <table>
@@ -79,10 +79,10 @@
           cell.element.appendChild(child);
         };
         grid.columns[1].renderer = currencyRenderer;
-        grid.columns[2].renderer = progressRenderer;              
-      </code> 
+        grid.columns[2].renderer = progressRenderer;
+      </code>
     </code-example>
-  </section>  
+  </section>
 </body>
 
 </html>
