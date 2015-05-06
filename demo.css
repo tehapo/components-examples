@@ -50,3 +50,7 @@ button {
   line-height: 1.55;
   margin: 9px;
 }
+
+table-of-contents ol {
+  color: rgba(0,0,0,0.4);
+}

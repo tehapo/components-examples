@@ -18,9 +18,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       polyfill across browsers.
 
     */
-    Polymer.Base.addFeature({
+    Polymer.Base._addFeature({
 
-      _prepContent: function() {
+      _prepShady: function() {
         // Use this system iff localDom is needed.
         this._useContent = this._useContent || Boolean(this._template);
         if (this._useContent) {
@@ -59,11 +59,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
+       * Return the element whose local dom within which this element 
+       * is contained. This is a shorthand for 
+       * `Polymer.dom(this).getOwnerRoot().host`.
+       */
+      get domHost() {
+        var root = Polymer.dom(this).getOwnerRoot();
+        return root && root.host;
+      },
+
+      /**
        * Force this element to distribute its children to its local dom.
-       * A user should call `distributeContent` if distribution has been 
-       * invalidated due to changes to selectors on child elements that 
+       * A user should call `distributeContent` if distribution has been
+       * invalidated due to changes to selectors on child elements that
        * effect distribution. For example, if an element contains an
-       * insertion point with <content select=".foo"> and a `foo` class is 
+       * insertion point with <content select=".foo"> and a `foo` class is
        * added to a child, then `distributeContent` must be called to update
        * local dom distribution.
        */
@@ -86,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _beginDistribute: function() {
         if (this._useContent && hasInsertionPoint(this.shadyRoot)) {
           // reset distributions
-          this._resetDistribution(this.shadyRoot);
+          this._resetDistribution();
           // compute which nodes should be distributed where
           // TODO(jmesserly): this is simplified because we assume a single
           // ShadowRoot per host and no `<shadow>`.
@@ -135,9 +145,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // Many of the following methods are all conceptually static, but they are
       // included here as "protected" methods to allow overriding.
 
-      _resetDistribution: function(node) {
+      _resetDistribution: function() {
         // light children
-        var children = getLightChildren(node);
+        var children = getLightChildren(this);
         for (var i = 0; i < children.length; i++) {
           var child = children[i];
           if (child._destinationInsertionPoints) {
@@ -145,7 +155,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         }
         // insertion points
-        var p$ = node._insertionPoints;
+        var root = this.shadyRoot;
+        var p$ = root._insertionPoints;
         for (var j = 0; j < p$.length; j++) {
           p$[j]._distributedNodes = [];
         }

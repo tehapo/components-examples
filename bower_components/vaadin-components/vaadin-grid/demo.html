@@ -39,13 +39,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
   <h3>Simplest possible with inline data</h3>
   <v-grid rows=1>
   <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th>Progress</th>
-      </tr>
-    </thead>
+    <col header-text="Name">
+    <col header-text="Value">
+    <col header-text="Progress">
     <tbody>
       <tr>
         <td>Grid</td>
@@ -66,13 +62,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
   <h3>Simplest possible with explicitly formatted inline data (i.e. children in cells)</h3>
   <v-grid id="childrenInCells">
   <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th>Progress</th>
-      </tr>
-    </thead>
+    <col header-text="Name">
+    <col header-text="Value">
+    <col header-text="Progress">
     <tbody>
       <tr>
         <td>Grid</td>
@@ -94,13 +86,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
   <h3>Simplest possible with data source (all data available, no formatting)</h3>
   <v-grid id='myGrid'>
   <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th>Progress</th>
-      </tr>
-    </thead>
+    <col header-text="Name">
+    <col header-text="Value">
+    <col header-text="Progress">
   </table>
   </v-grid>
 
@@ -123,13 +111,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
   <h3>Simplest possible with lazy data source (no formatting)</h3>
   <v-grid id='myBigGrid'>
   <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th>Progress</th>
-      </tr>
-    </thead>
+    <col header-text="Name">
+    <col header-text="Value">
+    <col header-text="Progress">
   </table>
   </v-grid>
 
@@ -151,13 +135,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
 
   <v-grid id="myFormatGrid">
   <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th>Progress</th>
-      </tr>
-    </thead>
+    <col header-text="Name">
+    <col header-text="Value">
+    <col header-text="Progress">
   </table>
   </v-grid>
   <script>
@@ -188,13 +168,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
 
   <v-grid id="myMapGrid">
   <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th>Progress</th>
-      </tr>
-    </thead>
+    <col header-text="Name">
+    <col header-text="Value">
+    <col header-text="Progress">
   </table>
   </v-grid>
     <button id="updateButton">update</button>
@@ -222,21 +198,21 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
 
         var updatedItem = {name: "Button X", value: Math.round(Math.random() * 1000), progress: Math.random()};
         data[0] = updatedItem;
-        grid.data.dataUpdated(0, [updatedItem]);
+        grid.data.clearCache();
       });
 
       document.querySelector('#addButton').addEventListener('click', function(e) {
         var grid = document.querySelector('#myMapGrid');
 
         data.splice(0, 0, {name: "Button " + data.length, value: 111, progress: 0.01});
-        grid.data.dataAdded(0, 1);
+        grid.data.clearCache(data.length);
       });
 
       document.querySelector('#removeButton').addEventListener('click', function(e) {
         var grid = document.querySelector('#myMapGrid');
 
         data.splice(0, 1);
-        grid.data.dataRemoved(0, 1);
+        grid.data.clearCache(data.length);
       });
   </script>
   </li>
@@ -244,12 +220,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
   <li>
   <h3>Mapping data from a array into single column</h3>
   <v-grid id="with-single-column">
+
     <table>
-      <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-      </thead>
+      <col header-text="Name">
     </table>
   </v-grid>
   <script>
@@ -270,6 +243,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
   <h3>Complex headers</h3>
   <v-grid>
   <table>
+    <col>
+    <col>
+    <col>
     <thead>
       <tr class="blue">
         <th><button>I'm a button</button></th>
@@ -310,16 +286,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
 
     <v-grid id="myMultiSelGrid" selection-mode="multi">
       <table>
-
-        <head>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Value</th>
-              <th>Progress</th>
-            </tr>
-          </thead>
-        </head>
+        <col header-text="Name">
+        <col header-text="Value">
+        <col header-text="Progress">
       </table>
     </v-grid>
     <div id="smbuttons">
@@ -372,13 +341,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
       <template>
         <v-grid selectionMode='multi'>
           <table>
-            <thead>
-            <tr>
-              <th>Name</th>
-              <th>Value</th>
-              <th>Progress</th>
-            </tr>
-            </thead>
+            <col header-text="Name">
+            <col header-text="Value">
+            <col header-text="Progress">
             <tbody>
             <template is="x-repeat" items="{{mydata}}">
               <tr>
@@ -412,11 +377,7 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
       <template>
         <v-grid selectionMode='multi'>
           <table>
-            <thead>
-            <tr>
-              <th>Name</th>
-            </tr>
-            </thead>
+            <col header-text="Name">
             <tbody>
             <template is="x-repeat" items="{{mydata}}">
               <tr>
@@ -448,13 +409,9 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
       <template>
         <v-grid selectionMode='multi'>
           <table>
-            <thead>
-            <tr>
-              <th>Name</th>
-              <th>Value</th>
-              <th>Progress</th>
-            </tr>
-            </thead>
+            <col header-text="Name">
+            <col header-text="Value">
+            <col header-text="Progress">
             <tbody>
             <template is="x-repeat" items="{{mydata}}">
               <tr>
@@ -485,7 +442,11 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
   <li>
   <h3>Sort example</h3>
     <v-grid id='mySortGrid'>
-      <table><thead><tr><th sortable>Name</th><th sortable>Value</th><th sortable>Progress</th></tr></thead></table>
+      <table>
+        <col header-text="Name" sortable>
+        <col header-text="Value" sortable>
+        <col header-text="Progress" sortable>
+      </table>
     </v-grid>
     <button id="mySortButton">Sort by column 1</button>
     Sort: <span id="mySortLabel"></span>
@@ -501,15 +462,15 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
           var dir = 'desc';
           button.addEventListener("click", function(event) {
             dir = dir == 'desc' ? "asc" : "desc";
-            grid.sortOrder = [{
+            grid.data.sortOrder = [{
               column: 1,
               direction: dir
             }];
           });
 
           grid.addEventListener("sort", function() {
-            var idx = grid.sortOrder[0].column;
-            var asc = grid.sortOrder[0].direction == 'asc';
+            var idx = grid.data.sortOrder[0].column;
+            var asc = grid.data.sortOrder[0].direction == 'asc';
             data.sort(function(a, b){
               return a[idx] < b[idx] && asc ? -1 : 1;
             });
@@ -526,12 +487,8 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
     <h3>Row editor</h3>
     <v-grid id='editableGrid' style='width: 200px'>
       <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Value</th>
-          </tr>
-        </thead>
+        <col header-text="Name">
+        <col header-text="Value">
         <tbody>
           <tr>
             <td>Grid</td>
@@ -581,7 +538,7 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
   <li>
   <h3>DOM API</h3>
   <v-grid
-    selection-mode='none'
+    selection-mode='disabled'
     selected-rows='0,2,3'
     rows=3
     frozen-columns= '-1'
@@ -653,12 +610,8 @@ td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
     <h3>Header and Footer</h3>
     <v-grid id='staticsections'>
       <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Value</th>
-          </tr>
-        </thead>
+        <col header-text="Name">
+        <col header-text="Value">
         <tbody>
           <tr>
             <td>Grid</td>

@@ -1,6 +1,6 @@
 {
   "name": "code-example",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://github.com/jounik/code-example",
   "authors": [
     "Jouni Koivuviita <jouni@jouni.me>"
@@ -23,13 +23,13 @@
   "dependencies": {
     "polymer": "Polymer/polymer#v0.8.0-rc.7"
   },
-  "_release": "0.0.5",
+  "_release": "0.0.6",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.5",
-    "commit": "4cac8234ceddc12c420d2c05dc2832c988e50d41"
+    "tag": "0.0.6",
+    "commit": "60d762990151ac413c34ff130cc8a74496663129"
   },
   "_source": "git://github.com/jounik/code-example.git",
-  "_target": "~0.0.5",
+  "_target": "~0.0.6",
   "_originalSource": "code-example"
 }
