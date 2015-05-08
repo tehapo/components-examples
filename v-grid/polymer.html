@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>v-grid Code Examples. DOM API</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../demo.css">
+  <script src="https://cdn.vaadin.com/vaadin-components/0.2-snapshot/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="common.html">
+</head>
+
+<body>
+  <section>
+    <h1>v-grid
+      <span>Polymer integration</span>
+    </h1>
+    <table-of-contents select="h3" class="toc"></table-of-contents>
+  </section>
+
+  <section>
+    <h3 id="headers">Polymer integration</h3>
+    <p></p>
+    <code-example>
+      <div demo>
+        <dom-module id="my-grid-with-template" demo>
+          <template>
+            <v-grid>
+              <table>
+                <col header-text="Name">
+                <col header-text="Value">
+                <col header-text="Progress">
+                <tbody>
+                <template is="x-repeat" items="{{mydata}}">
+                  <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.value}}</td>
+                    <td>{{item.progress}}</td>
+                  </tr>
+                </template>
+                </tbody>
+              </table>
+            </v-grid>
+          </template>
+        </dom-module>
+        <my-grid-with-template></my-grid-with-template>
+      </div> 
+      <code demo-var="grid">
+        Polymer({
+          is: 'my-grid-with-template',
+          ready: function() {
+            this.mydata = [
+              {"name": "Grid", "value": "10000", "progress": 0.8},
+              {"name": "Vaadin X", "value": "999999", "progress": 0.8}
+            ];
+          }
+        }) ;
+      </code>
+    </code-example>
+  </section>
+ 
+</body>
+</html>

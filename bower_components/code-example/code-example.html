@@ -99,13 +99,12 @@ CodeExample = Polymer({
       }
     }
     if (scriptContent) {
-      if(demoVar) {
-        // Wrap the code in a function to avoid sharing the scope.
-        scriptContent =
-          "(function(" + demoVar +  "){" +
-            scriptContent +
-          "}(document.getElementById('" + demoComponent.id + "')))";
-      }
+      // Wrap the code in a function to avoid sharing the scope.
+      scriptContent =
+        "(function(" + (demoVar ? demoVar : 'demo') +  "){" +
+          scriptContent +
+        "}(document.getElementById('" + demoComponent.id + "')))";
+
       script.text = scriptContent;
       // Delay the execution of the script, so as the component is ready
       setTimeout(function() {
