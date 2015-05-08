@@ -32,6 +32,15 @@ a {
   margin-bottom: 3em;
 }
 
+.big {
+  color: rgba(0,0,0,0.56);
+}
+
+.big a {
+  font-size: 1.3em;
+  font-weight: 500;
+}
+
 pre, code {
   font-family: Source Code Pro, Consolas, monospace;
   background-color: rgba(0,0,0,0.06);
