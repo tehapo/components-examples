@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>v-grid Code Examples – Formatting data</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../demo.css">
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="common.html">
+</head>
+
+<body>
+  <section>
+    <h1>v-grid
+      <span>Grid Editor</span>
+    </h1>
+    <table-of-contents select="h3" class="toc"></table-of-contents>
+  </section>
+
+  <section>
+    <h3 id="format">Default Editor</h3>
+    <p>Default editor implements data inputs as standard HTML text input elements.
+       The <code>editor.save</code> method is not defined, so you must define one to handle
+       correctly changes in your data sources.
+    </p>
+    <code-example>
+      <v-grid demo editable>
+        <table>
+          <colgroup>
+            <col header-text="Name"><col header-text="Value"><col header-text="Progress">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>Project A</td><td>10000</td><td>0.8</td>
+            </tr>
+            <tr>
+              <td>Project B</td><td>999999</td><td>0.8</td>
+            </tr>
+          </tbody>
+        </table>
+      </v-grid>    
+      <code demo-var="grid">
+        grid.editor.handler = {
+          save: function(req) {
+            window.alert("Not save function defined yet")
+            req.success();
+          }
+        };
+      </code>
+    </code-example>
+  </section>
+  
+  <section>
+    <h3 id="format">Customized Editor</h3>
+    <p>
+     Editor can be enterelly customized.
+     Use <code>editor.getCellEditor</code> to define a function which would return an element implementation per column.<br>
+     Use <code>editor.bind</code> to bind data from your data source to each cell editor element.br>
+     Use <code>editor.save</code> to handle changes in your datasource.<br>
+     Remember to call <code>req.sucess()</code> at the end of binding or saving functions in order to close the editor popup.
+    </p>
+    <code-example>
+      <v-grid demo>
+        <table>
+          <colgroup>
+            <col header-text="Name"><col header-text="Value"><col header-text="Progress">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>Project A</td><td>10000</td><td>0.8</td>
+            </tr>
+            <tr>
+              <td>Project B</td><td>999999</td><td>0.8</td>
+            </tr>
+          </tbody>
+        </table>
+      </v-grid>    
+      <code demo-var="grid">
+        grid.editor.enabled = true;
+        grid.editor.saveButtonText = "Yep";
+        grid.editor.cancelButtonText = "Nope";
+        grid.editor.handler = {
+          getCellEditor: function(columnObject) {
+            return document.createElement("input");
+          },
+          bind: function(req) {
+            for (var i = 0; i < req.grid.columns.length; i++) {
+              var col = req.grid.columns[i];
+              var el = req.getCellEditor(col);
+              el.value = req.dataItem[i];
+            }
+            req.success();
+          },
+          save: function(req) {
+            for (var i = 0; i < req.grid.columns.length; i++) {
+              var col = req.grid.columns[i];
+              var el = req.getCellEditor(col);
+              var cell = Polymer.dom(grid).querySelectorAll("tbody tr")[req.rowIndex].querySelectorAll("td")[i];
+              cell.innerHTML = el.value;
+            }
+            req.success();
+          }
+        };
+      </code>
+    </code-example>
+  </section>
+
+</body>
+
+</html>
