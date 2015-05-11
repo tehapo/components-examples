@@ -26,7 +26,7 @@
       interaction (by clicking or tapping) or alternatively by using the
       selection JavaScript API.</p>
     <code-example>
-      <v-grid demo>
+      <v-grid demo hidden>
         <table>
           <colgroup>
             <col header-text="Name">
@@ -48,9 +48,9 @@
         </table>
       </v-grid>
 
-      <code demo-var="grid1">
-        grid1.selection.deselect(0);
-        grid1.selection.select(1);
+      <code demo-var="grid">
+        grid.selection.deselect(0);
+        grid.selection.select(1);
       </code>
     </code-example>
   </section>
@@ -69,49 +69,6 @@
       You can toggle between <b>multi</b> and <b>all</b> modes by clicking the checkbox on Grid header.
     </p>
     <code-example>
-      <div demo>
-        <v-grid selection-mode="multi">
-          <table>
-            <colgroup>
-              <col header-text="Name">
-              <col header-text="Surname">
-              <col header-text="Activity">
-            </colgroup>
-          </table>
-        </v-grid>
-        Selection mode:
-        <select>
-          <option value="single">Single</option>
-          <option value="multi" selected>Multi</option>
-          <option value="all">All</option>
-          <option value="disabled">Disabled</option>
-        </select>
-      </div>
-      <code demo-var="demo2">
-        // Set a datasource for the Grid
-        var grid2 = demo2.querySelector("v-grid");
-        grid2.data.source = myBigData;
-
-        // Bind the mode select value to vgrid.selection.mode
-        var modeSelect = demo2.querySelector("select")
-        modeSelect.addEventListener("change", function() {
-          grid2.selection.mode = modeSelect.value;
-        });
-        grid2.addEventListener("select", function() {
-          modeSelect.value = grid2.selection.mode;
-        });
-      </code>
-    </code-example>
-  </section>
-
-  <section>
-    <h3>Processing the selections as arrays</h3>
-    <p>You can simply ask the Grid for all the selected row indexes with <b>grid.selection.selected()</b>
-      function which returns an array of integers for you to process further.</p>
-    <p>This works fine on most cases with <i>single</i> and <i>multi</i> selection modes, but if your grid contains tons
-      of data and the selection mode is set to <i>all</i>, you're better off with a likely more
-      compact array attained from <b>grid.selection.deselected()</b>.</p>
-    <code-example>
       <v-grid demo selection-mode="multi">
         <table>
           <colgroup>
@@ -121,13 +78,64 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid3">
+      <code demo-var="grid" hidden>
+        var controls = document.createElement("div");
+        controls.innerHTML = 'Selection mode:';
+
+        var modeSelect = document.createElement("select");
+        ["single", "multi", "all", "disabled"].forEach(function(it){
+          var option = document.createElement("option");
+          option.value = it;
+          option.innerText = it;
+          modeSelect.appendChild(option);
+        });
+        modeSelect.value = "multi";
+
+        controls.appendChild(modeSelect);
+        grid.parentElement.appendChild(controls);
+
         // Set a datasource for the Grid
-        grid3.data.source = myBigData;
+        grid.data.source = myBigData;
+        // Bind the mode select value to vgrid.selection.mode
+        modeSelect.addEventListener("change", function() {
+          grid.selection.mode = modeSelect.value;
+        });
+        grid.addEventListener("select", function() {
+          modeSelect.value = grid.selection.mode;
+        });
+      </code>
+      <code demo-var="grid">
+        // Set the selection mode to "multi"
+        grid.selection.mode = "multi";
+      </code>
+    </code-example>
+  </section>
+
+  <section>
+    <h3>Processing the selections as arrays</h3>
+    <p>You can simply ask the Grid for all the selected row indexes with <code>selection.selected()</code>
+      function which returns an array of integers for you to process further.</p>
+    <p>This works fine on most cases with <i>single</i> and <i>multi</i> selection modes, but if your grid contains tons
+      of data and the selection mode is set to <i>all</i>, you're better off with <code>selection.deselected()</code>.</p>
+    <code-example>
+      <v-grid demo selection-mode="multi" hidden>
+        <table>
+          <colgroup>
+            <col header-text="Name">
+            <col header-text="Surname">
+            <col header-text="Activity">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        // Set a datasource for the Grid
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
         // Log the selections / deselection to console on select event
-        grid3.addEventListener("select", function() {
-          console.log("Selected: " + grid3.selection.selected());
-          console.log("Deselected: " + grid3.selection.deselected());
+        grid.addEventListener("select", function() {
+          console.log("Selected: " + grid.selection.selected());
+          console.log("Deselected: " + grid.selection.deselected());
         });
       </code>
     </code-example>
@@ -136,12 +144,12 @@
   <section>
     <h3>Iterating the selections</h3>
     <p>Another option for processing the selections is to iterate trough them.
-    The <b>grid.selection.selected()</b> and <b>grid.selection.deselected()</b> functions accept an iterator function
+    The <code>selection.selected()</code> and <code>selection.deselected()</code> functions accept an iterator function
     as the first argument so you can loop trough all the selections without ever populating an array.</p>
     <p>If however your iterator function returns a value, then it's considered a mapper function meaning that
     the selection API function will return an array of pre-mapped values.</p>
     <code-example>
-      <v-grid demo selection-mode="multi">
+      <v-grid demo selection-mode="multi" hidden>
         <table>
           <colgroup>
             <col header-text="Name">
@@ -150,13 +158,15 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid4">
+      <code demo-var="grid" hidden>
         // Set a datasource for the Grid
-        grid4.data.source = myBigData;
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
         // Log selected designers list on select event
-        grid4.addEventListener("select", function() {
+        grid.addEventListener("select", function() {
           console.log("Selected designers:");
-          grid4.selection.selected(function(index) {
+          grid.selection.selected(function(index) {
             var data = myBigData[index];
             if (data[2] === "Design") {
               console.log("-" + data[0] + " " + data[1]);
@@ -170,13 +180,13 @@
 
   <section>
     <h3>Processing selections in batches</h3>
-    <p>The <b>grid.selection.selected()</b> and <b>grid.selection.deselected()</b> functions also accept
-    startIndex as the second argument and endIndex as the third argument. These can be used to process
-    the selections in batches. <b>grid.selection.size</b> property comes in handy here.</p>
-    <p>All the three parameters (iterator/mapper, startIndex, endIndex) have default values so any of
+    <p>The <code>selection.selected()</code> and <code>selection.deselected()</code> functions also accept
+    <i>startIndex</i> and <i>endIndex</i> as the second and third argument. These can be used to process
+    the selections in batches. <code>selection.size</code> property comes in handy here.</p>
+    <p>All the three parameters <i>(iterator/mapper, startIndex, endIndex)</i> have default values so any of
     them can be omitted (or set as undefined).</p>
     <code-example>
-      <v-grid demo selection-mode="multi">
+      <v-grid demo selection-mode="multi" hidden>
         <table>
           <colgroup>
             <col header-text="Name">
@@ -185,14 +195,15 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid5">
+      <code demo-var="grid" hidden>
         // Set a datasource for the Grid
-        grid5.data.source = myBigData;
-
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
         // Log selected indexes in batches of 5
-        grid5.addEventListener("select", function() {
-          for (var i = 0; i < grid5.selection.size; i += 5){
-            console.log(grid5.selection.selected(undefined, i, i+4));
+        grid.addEventListener("select", function() {
+          for (var i = 0; i < grid.selection.size; i += 5){
+            console.log(grid.selection.selected(undefined, i, i+4));
           }
         });
       </code>
