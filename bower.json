@@ -18,8 +18,8 @@
     "tests"
   ],
   "dependencies": {
-    "vaadin-components": "vaadin-components#0.2-snapshot",
-    "code-example": "~0.0.6",
+    "vaadin-components": "vaadin-components#0.2.0",
+    "code-example": "~0.0.7",
     "table-of-contents": "~0.0.1"
   }
 }
