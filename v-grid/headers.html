@@ -8,21 +8,6 @@
   <link rel="stylesheet" href="../demo.css">
   <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="common.html">
-  <style>
-    td.red, th.red, .red th, .red td, td.foot1, .foot1 td {
-      background: mistyrose !important;
-    }
-    td.blue, th.blue, .blue th, .blue td, td.foot2, .foot2 td {
-      background: aliceblue !important;
-    }
-    .foot1, .foot2, .bold th {
-      font-weight: bold !important;
-      text-align: center;
-    }
-    .small th {
-      font-size: 12px !important;
-    }
-  </style>
 </head>
 
 <body>
@@ -34,95 +19,189 @@
   </section>
 
   <section>
-    <h3 id="headers">Formatting Headers in DOM</h3>
-    <p>Cells in headers can be customized in the <code>thead</code> element, and
-       footers using the <code>tfoot</code> section</p>
-    <p>The <code>colgroup</code> element can be used to customize columns</p>
+    <h3>Customizing headers and footers</h3>
+    <p>Headers and footer can be customized in the <code>thead</code> element and
+       footers respectively in the <code>tfoot</code> section</p>
+    <p>JavaScript API exposes the <code>header</code> and <code>footer</code> objects
+    for same functionality. Excluding the <code>default row</code> property headers and
+    footers share the same exact API.</p>
     <code-example>
-      <v-grid demo>
+      <v-grid rows=3 demo>
         <table>
-          <colgroup><col><col><col></colgroup>
+          <colgroup>
+            <col><col><col><col>
+          </colgroup>
           <thead>
-            <tr class="blue">
-              <th><button>I'm a button</button></th>
-              <th colspan="2">Status</th>
+            <tr>
+              <th colspan=2>Employee</th><th colspan=2>Responsibility</th>
             </tr>
-            <tr class="red bold" default>
-              <th>Name</th>
-              <th class="blue">Value</th>
-              <th>Progress</th>
-            </tr>
-            <tr class="small">
-              <th>Project name</th>
-              <th>In Euro</th>
-              <th>Percentage</th>
+            <tr>
+              <th>First Name</th><th>Last Name</th><th>Operation</th><th>Product</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Project A</td><td>10000</td><td>0.8</td>
-            </tr>
-            <tr>
-              <td>Project B</td><td>999999</td><td>0.8</td>
-            </tr>
-          </tbody>
           <tfoot>
-            <tr class="foot1">
-              <th colspan=3>This is a footer line in a cell</th>
-            </tr>
-            <tr class="foot2">
-              <th colspan=3><span>Some widgets in a footer</span> <input type=text/> <button>Click</button></th>
-            </tr>
+            <tr></tr>
           </tfoot>
         </table>
       </v-grid>
+      <code demo-var="grid" hidden>
+        // Set a datasource for the Grid
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        // Adding and removing headers and footers in JavaScript
+        grid.header.addRow(1, ["First Name", "Last Name", "Operation", "Product"]);
+        grid.header.removeRow(2);
+        grid.footer.addRow();
+        grid.footer.removeRow(0);
+      </code>
+
     </code-example>
+
+  </section>
+
+
+  <section>
+    <h3>Cell colspan</h3>
+    <p>Colspan property defines the count of columns a single header/footer cell should span.</p>
+    <p>The value can be set either declaratively trough the lightDom API or programmatically
+    with the cell API <code>header.getCell(rowIndex, colIndex).colspan</code>.</p>
+
+    <code-example>
+      <v-grid rows=3 demo>
+        <table>
+          <colgroup>
+            <col><col><col><col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th colspan=2>Employee</th><th colspan=2>Responsibility</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr></tr>
+          </tfoot>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        // Set a datasource for the Grid
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        // Cell API can be used to define cell colspans.
+        grid.header.getCell(0, 0).colspan = 2;
+        grid.header.getCell(0, 2).colspan = 2;
+      </code>
+
+    </code-example>
+
   </section>
 
   <section>
-    <h3 id="jsheaders">Javascript API for Headers and Footers</h3>
-    <p>Use the <code>grid.header</code> and <code>grid.footer</code> objects to
-       customize headers and footers.</p>
+    <h3>Cell content</h3>
+    <p>Typically header/footer cells contain plain text but also HTML or even custom
+      elements may be wrapped in the cells.</p>
     <code-example>
       <v-grid demo>
         <table>
           <colgroup>
-            <col header-text="Name">
-            <col header-text="Value">
-            <col header-text="Progress">
+            <col><col><col>
           </colgroup>
-          <tbody>
+          <thead>
             <tr>
-              <td>Project A</td><td>10000</td><td>0.8</td>
+              <th colspan=2><b>Employee</b></th><th>Activity</th>
             </tr>
             <tr>
-              <td>Project B</td><td>999999</td><td>0.8</td>
+              <th colspan=3>
             </tr>
-          </tbody>
+          </thead>
         </table>
       </v-grid>
+      <code demo-var="grid" hidden>
+        var filterElement = document.createElement("input");
+        filterElement.setAttribute("type", "search");
+        filterElement.setAttribute("placeholder", "Filter...");
+        filterElement.style.width = "100%";
+
+        var timer = 0;
+        function filter(){
+          clearTimeout(timer);
+          timer = setTimeout(grid.data.clearCache, 500);
+        }
+
+        filterElement.addEventListener("keyup", filter);
+        filterElement.addEventListener("click", filter);
+
+        grid.data.source = function(req) {
+          var filterValue = filterElement.value.toLowerCase();
+          var data = myBigData.filter(function(val){ return (val.toString().toLowerCase()).indexOf(filterValue) > -1 } );
+          var slice = data.slice(req.index, req.index + req.count);
+          req.success(slice, data.length == 0 ? 1 : data.length);
+        };
+
+      </code>
       <code demo-var="grid">
-        // Remove the header row
-        grid.header.removeRow(0);
+        grid.header.getCell(1, 0).content = filterElement;
+      </code>
+    </code-example>
+  </section>
 
-        // Add a header row
-        var colspanToggle = createButton("Toggle colspan", function(){
-          var cell = grid.header.getCell(0, 0);
-          cell.colspan = cell.colspan == 1 ? 2 : 1;
-        });
-        grid.header.addRow(0, [colspanToggle, "Value"]);
+  <section>
+    <h3>Custom styles</h3>
+    <p>Class names for header/footer rows and cells can be assigned with either the
+      <code>class</code> attribute in the lightDom API or <code>header.</code> </p>
+    <code-example>
+      <v-grid rows=3 demo>
+        <table>
+          <colgroup>
+            <col><col>
+          </colgroup>
+          <thead>
+            <tr class="firstrow">
+              <th>First Name</th><th class="lastcell">Last Name</th>
+            </tr>
+          </thead>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        // Set a datasource for the Grid
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        // Set the class names using JavaScript API
+        grid.header.setRowClassName(0, "firstrow");
+        grid.header.getCell(0, 1).className = "lastcell";
+      </code>
+    </code-example>
+  </section>
 
-        // Add a footer row
-        grid.footer.addRow(0, ["sum", 11000]);
-
-        // Toggle header visibility
-        grid.parentNode.appendChild(createButton('Toggle header', function(){
-          grid.header.hidden = !grid.header.hidden;
-        }));
-        // Toggle footer visibility
-        grid.parentNode.appendChild(createButton('Toggle footer', function(){
-          grid.footer.hidden = !grid.footer.hidden;
-        }));
+  <section>
+    <h3>Default row</h3>
+    <p>Default row in the grid header represents the row that contains the
+      user interfaces for sorting and "select all" chechbox on multi-select mode.</p>
+    <code-example>
+      <v-grid rows=3 selection-mode="multi" demo>
+        <table>
+          <colgroup>
+            <col sortable sort-direction="asc"><col sortable sort-direction="desc"><col><col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th colspan=2>Employee</th><th colspan=2>Responsibility</th>
+            </tr>
+            <tr>
+              <th>First</th><th>Last</th><th>Operation</th><th>Product</th>
+            </tr>
+          </thead>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        // Set a datasource for the Grid
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        // Set the default row using JavaScript API
+        grid.header.defaultRow = 1;
       </code>
     </code-example>
   </section>
