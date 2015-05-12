@@ -32,7 +32,7 @@
         <table>
           <colgroup>
             <col header-text="First column">
-              <col header-text="Second column">
+            <col header-text="Second column">
           </colgroup>
           <tbody>
             <tr>
@@ -56,10 +56,6 @@
     <p>Columns can be added dynamically using the JavaScript API. You can also
        modify the lightDom of the component, but it is not the recommended
        way.</p>
-    <p>Since some of the API is asynchronous, v-grid provides the
-      <code>then()</code>
-      function which can be used to trigger a callback after any pending tasks
-       are finished (the addition of the column 'Column one' in this case).</p>
     <code-example>
       <v-grid demo hidden></v-grid>
       <code demo-var="grid" hidden>
@@ -67,11 +63,34 @@
       </code>
       <code demo-var="grid">
         grid.addColumn({ headerContent: "Column one" });
-
         // Specify the index or name of the column before which to add the new column
-        grid.then(function() {
-          grid.addColumn({ headerContent: "I’m First"}, 0);
-        });
+        grid.addColumn({ headerContent: "I’m First"}, 0);
+      </code>
+    </code-example>
+  </section>
+
+  <section>
+    <h3 id="add">Column width</h3>
+    <p>By default all the columns share the available size equally. They may also be
+    assigend an explicit width, a max width and a min width.</p>
+    <code-example>
+      <v-grid demo>
+        <table>
+          <colgroup>
+            <col header-text="Name" width=30>
+            <col header-text="Surname" max-width=200>
+            <col header-text="Activity" min-width=100>
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        // Setting the width properties with JS api
+        grid.columns[0].width = 30;
+        grid.columns[1].maxWidth = 200;
+        grid.columns[2].minWidth = 100;
       </code>
     </code-example>
   </section>
