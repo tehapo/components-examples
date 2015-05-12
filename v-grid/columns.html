@@ -19,7 +19,7 @@
   </section>
 
   <section>
-    <h3 id="define">Defining Columns</h3>
+    <h3>Defining Columns</h3>
     <p>Columns can be defined using HTML or Javascript.</p>
     <p>For the HTML version, the <code>table</code> element might seem
        redundant, but it is required in order for the browsers to parse the
@@ -52,7 +52,7 @@
   </section>
 
   <section>
-    <h3 id="add">Adding Columns Dynamically</h3>
+    <h3>Adding Columns Dynamically</h3>
     <p>Columns can be added dynamically using the JavaScript API. You can also
        modify the lightDom of the component, but it is not the recommended
        way.</p>
@@ -70,16 +70,18 @@
   </section>
 
   <section>
-    <h3 id="add">Column width</h3>
-    <p>By default all the columns share the available size equally. They may also be
-    assigend an explicit width, a max width and a min width.</p>
+    <h3>Column width</h3>
+    <p>By default all the columns share the available size equally.
+    <code>column.flex</code> property can be used to adjust how much a column spans
+    in width in relation to other columns.</p>
+    <p>Columns may also be assigend an explicit width, a maximum width and a minimum width.</p>
     <code-example>
       <v-grid demo>
         <table>
           <colgroup>
-            <col header-text="Name" width=30>
-            <col header-text="Surname" max-width=200>
-            <col header-text="Activity" min-width=100>
+            <col header-text="Name" width=30 flex=1>
+            <col header-text="Surname" max-width=200 flex=2>
+            <col header-text="Activity" min-width=100 flex=1>
           </colgroup>
         </table>
       </v-grid>
@@ -91,6 +93,10 @@
         grid.columns[0].width = 30;
         grid.columns[1].maxWidth = 200;
         grid.columns[2].minWidth = 100;
+        // Setting the flex properties with JS api
+        grid.columns[0].flex = 1;
+        grid.columns[1].flex = 2;
+        grid.columns[2].flex = 1;
       </code>
     </code-example>
   </section>
