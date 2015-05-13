@@ -128,6 +128,56 @@
     </code-example>
   </section>
 
+  <section>
+    <h3>Read-only columns</h3>
+    <p>Labeling individual columns with <code>read-only</code> excludes them from
+      the editor.</p>
+
+    <code-example>
+      <v-grid rows=4 editable demo>
+        <table>
+          <colgroup>
+            <col header-text="Name" read-only>
+            <col header-text="Surname">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+      </code>
+
+      <code demo-var="grid">
+        // Setting a column read-only in JavaScript
+        grid.columns[0].readOnly = true;
+      </code>
+    </code-example>
+  </section>
+
+  <section>
+    <h3>Save and cancel buttons</h3>
+    <p>Editor buttons have <i>Save</i> and <i>Cancel</i> as default captions. They can be changed
+    by modifying the <code>editor.saveButtonText</code> and <code>editor.cancelButtonText</code> properties</p>
+
+    <code-example>
+      <v-grid rows=4 editable demo hidden>
+        <table>
+          <colgroup>
+            <col header-text="Name">
+            <col header-text="Surname">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+      </code>
+
+      <code demo-var="grid">
+        grid.editor.saveButtonText = "Commit";
+        grid.editor.cancelButtonText = "Discard";
+      </code>
+    </code-example>
+  </section>
+
 </body>
 
 </html>
