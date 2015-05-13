@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>v-grid Code Examples – Sizing and Styling</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../demo.css">
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="common.html">
+</head>
+
+<body>
+  <section>
+    <h1><a href="./">v-grid</a>
+      <span>Sizing and Styling</span>
+    </h1>
+    <table-of-contents select="h3" class="toc"></table-of-contents>
+  </section>
+
+  <section>
+    <h3>Sizing the grid</h3>
+    <p>If Grid is not assigned any bounds externally it will size automatically by itself. By default it
+    will take 100% of the horizontal space available and its default height depends on the number of
+    contained data rows.</p>
+    <p>Standard CSS rules can be used to set a size for the grid or alternatively Grid can be
+    assigned a pre-defined height (in rows) either declaratively in the DOM API or programmatically
+    with the JS API</p>
+    <code-example>
+      <v-grid rows=5 demo>
+        <table>
+          <colgroup>
+            <col header-text="Name">
+            <col header-text="Surname">
+            <col header-text="Activity">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        // Setting the explicit row count in JavaScript
+        grid.rows = 5;
+      </code>
+    </code-example>
+  </section>
+
+</body>
+</html>
