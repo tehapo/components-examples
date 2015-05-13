@@ -4,25 +4,34 @@
   <title>Vaadin Components Code Examples</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="bower_components/marked/lib/marked.js"></script>
+  <link rel="import" href="bower_components/code-example/code-example.html">
   <link rel="stylesheet" href="demo.css">
 </head>
 <body>
 
+  <section id="readme">
+  </section>
+  <script>
+    var xmlhttp;
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET", "https://cdn.rawgit.com/vaadin/components/master/vaadin-components-package/README.md", false);
+    xmlhttp.send();
+    var readme = document.getElementById("readme");
+    readme.innerHTML = marked(xmlhttp.responseText);
+
+    [].forEach.call(readme.querySelectorAll("code"), function(code) {
+      code.className = "language-markup";
+      Prism.highlightElement(code);
+    });
+
+  </script>
+
   <section>
-    <h1>Vaadin Components <span>Code Examples</span></h1>
+    <h2>Code Examples</h2>
     <ul class="big">
       <li><a href="v-grid/">v-grid</a> – Examples for the powerful data grid component</li>
     </ul>
-  </section>
-
-
-  <section>
-  <h3>Getting Started</h3>
-
-  <p>To get started in using Vaadin Components, please follow the
-    <a href="https://github.com/vaadin/components/blob/master/vaadin-components-package/README.md">README</a>
-    instructions.
-  </p>
   </section>
 
 </body>
