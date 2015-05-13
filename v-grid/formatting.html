@@ -19,8 +19,8 @@
   </section>
 
   <section>
-    <h3 id="format">Inline Formatted Data</h3>
-    <p>You can place any regular HTML inside the grid cells.</p>
+    <h3>Inline Formatted Data</h3>
+    <p>Any regular HTML can be placed inside the grid cells with the DOM api.</p>
     <code-example>
       <v-grid demo>
         <table>
@@ -47,8 +47,8 @@
   </section>
 
   <section>
-    <h3 id="format">Defining Data Renderers</h3>
-    <p>You can present the data of a column in any format using a renderer function.</p>
+    <h3>Defining Data Renderers</h3>
+    <p>Column data can be presented in any format using a renderer function.</p>
     <code-example>
       <v-grid demo>
         <table>
@@ -81,6 +81,38 @@
         grid.columns[1].renderer = currencyRenderer;
         grid.columns[2].renderer = progressRenderer;
       </code>
+    </code-example>
+  </section>
+
+  <section>
+    <h3>Generated columns</h3>
+    <p>ValueGenerator functions may be assigned to columns to occupy their cells with custom values
+    instead of the ones defined by the datasource directly. This also allows creating additional
+    columns with any generated content data.</p>
+    <code-example>
+      <v-grid demo hidden>
+        <table>
+          <colgroup>
+            <col header-text="Name">
+            <col header-text="Activity">
+            <col header-text="Progress">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        grid.columns[1].valueGenerator = function(data) {
+          return data[2] + " the " + data[3];
+        };
+        grid.columns[2].valueGenerator = function(data) {
+          // Because we're generating random numbers here,
+          // the value changes every time it's scrolled out of viewport.
+          return Math.random(1).toFixed(2);
+        };
+      </code>
+
     </code-example>
   </section>
 </body>
