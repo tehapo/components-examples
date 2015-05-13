@@ -9,7 +9,7 @@
   <script>
     function createButton(text, fnc) {
       var button = document.createElement("button");
-      button.innerText = text;
+      button.innerHTML = text;
       button.addEventListener("click", fnc);
       return button;
     }
