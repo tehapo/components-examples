@@ -19,52 +19,58 @@
   </section>
 
   <section>
-    <h3 id="format">Default Editor</h3>
-    <p>Default editor implements data inputs as standard HTML text input elements.
-       The <code>editor.save</code> method is not defined, so you must define one to handle
-       correctly changes in your data sources.
+    <h3>Default Editor</h3>
+    <p>With the editor feature of the Grid, it is easy to offer the end-user the possibility
+      to edit individual items/rows of data in the Grid. The editor can be activated by the
+      end-user either by double-clicking a row or by focusing a row and pressing the Enter key.
+      <code>editable</code> and <code>editor.enabled</code> properties are used to enable the
+      editor feature.</p>
+    <p>Grid has a built-in default editor implementation which uses simple HTML text input elements
+      for editing the values. <code>editor.save</code> function is not defined by default,
+      so clicking the "save" button only closes the default editor.
     </p>
     <code-example>
-      <v-grid demo editable>
+      <v-grid editable demo>
         <table>
           <colgroup>
-            <col header-text="Name"><col header-text="Value"><col header-text="Progress">
+            <col header-text="Name">
+            <col header-text="Surname">
+            <col header-text="Activity">
           </colgroup>
-          <tbody>
-            <tr>
-              <td>Project A</td><td>10000</td><td>0.8</td>
-            </tr>
-            <tr>
-              <td>Project B</td><td>999999</td><td>0.8</td>
-            </tr>
-          </tbody>
         </table>
-      </v-grid>    
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+      </code>
+
       <code demo-var="grid">
-        grid.editor.handler = {
-          save: function(req) {
-            window.alert("Not save function defined yet")
-            req.success();
-          }
-        };
+        // Enabling the editor in JavaScript
+        grid.editor.enabled = true;
       </code>
     </code-example>
   </section>
-  
+
   <section>
-    <h3 id="format">Customized Editor</h3>
-    <p>
-     Editor can be enterelly customized.
-     Use <code>editor.getCellEditor</code> to define a function which would return an element implementation per column.<br>
-     Use <code>editor.bind</code> to bind data from your data source to each cell editor element.br>
-     Use <code>editor.save</code> to handle changes in your datasource.<br>
-     Remember to call <code>req.sucess()</code> at the end of binding or saving functions in order to close the editor popup.
+    <h3>Custom Editor Handler</h3>
+    <p>To provide custom editor fields for Grid cells or to actually persist the modified data
+    to data source after clicking save a custom <code>editor.handler</code> should be implemented.
+    It consists of four callback functions:
+      <ul>
+        <li><code>handler.getCellEditor</code></li> should return an editor field for a requested column.
+        <li><code>handler.bind</code></li> should populate the editor fields with data.
+        <li><code>handler.save</code></li> should commit the changes to the data source.
+        <li><code>handler.cancel</code></li> defines an action to be performed on editor cancel.
+      </ul>
+      Remember to call <code>request.sucess()</code> at the end of binding and saving functions in order to close the editor popup.
+      In case the data source is changed on save <code>grid.data.clearCache()</code> should also be called.
     </p>
     <code-example>
-      <v-grid demo>
+      <v-grid editable demo>
         <table>
           <colgroup>
-            <col header-text="Name"><col header-text="Value"><col header-text="Progress">
+            <col header-text="Name">
+            <col header-text="Value">
+            <col header-text="Progress" name="progress">
           </colgroup>
           <tbody>
             <tr>
@@ -75,20 +81,29 @@
             </tr>
           </tbody>
         </table>
-      </v-grid>    
+      </v-grid>
       <code demo-var="grid">
-        grid.editor.enabled = true;
-        grid.editor.saveButtonText = "Yep";
-        grid.editor.cancelButtonText = "Nope";
+        // Define a custom editor handler
         grid.editor.handler = {
-          getCellEditor: function(columnObject) {
-            return document.createElement("input");
+          getCellEditor: function(col) {
+            window.haha = col;
+            var result = document.createElement("input");
+            if (col.name === "progress"){
+              result.setAttribute("type", "range");
+              result.min = 0;
+              result.max = 100;
+            }
+            return result;
           },
           bind: function(req) {
             for (var i = 0; i < req.grid.columns.length; i++) {
               var col = req.grid.columns[i];
               var el = req.getCellEditor(col);
-              el.value = req.dataItem[i];
+              if (col.name === "progress") {
+                el.value = + req.dataItem[i] * 100;
+              } else {
+                el.value = req.dataItem[i];
+              }
             }
             req.success();
           },
@@ -96,10 +111,17 @@
             for (var i = 0; i < req.grid.columns.length; i++) {
               var col = req.grid.columns[i];
               var el = req.getCellEditor(col);
+
+              // This example uses a light dom data source so we'll just modify the dom
               var cell = Polymer.dom(grid).querySelectorAll("tbody tr")[req.rowIndex].querySelectorAll("td")[i];
-              cell.innerHTML = el.value;
+              if (col.name === "progress") {
+                cell.innerHTML = el.value / 100;
+              } else {
+                cell.innerHTML = el.value;
+              }
             }
             req.success();
+            req.grid.data.clearCache();
           }
         };
       </code>
