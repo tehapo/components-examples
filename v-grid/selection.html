@@ -85,7 +85,7 @@
         ["single", "multi", "all", "disabled"].forEach(function(it){
           var option = document.createElement("option");
           option.value = it;
-          option.innerText = it;
+          option.innerHTML = it;
           modeSelect.appendChild(option);
         });
         modeSelect.value = "multi";
