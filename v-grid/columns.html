@@ -101,6 +101,37 @@
     </code-example>
   </section>
 
+  <section>
+    <h3>Frozen columns</h3>
+    <p>A number of columns starting from the leftmost may be set frozen which forces them to remain
+    horizontally still while rest of the columns scroll normally. On multi-select mode the selection column
+    containing the checkboxes is frozen by default but setting <code>grid.frozenColumns</code> to
+    -1 will unfreeze it as well.</p>
+    <code-example>
+      <v-grid rows=5 selection-mode="multi" demo hidden>
+        <table>
+          <colgroup>
+            <col width=300 header-text="Name">
+            <col width=300 header-text="Surname">
+            <col width=300 header-text="Operation">
+            <col width=300 header-text="Product">
+            <col width=300 header-text="Progress">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+        grid.then(function(){
+          grid.columns[4].valueGenerator = function(data) {
+            return Math.random(1).toFixed(2);
+          };
+        });
+      </code>
+      <code demo-var="grid">
+        grid.frozenColumns = 1;
+      </code>
+    </code-example>
+  </section>
 </body>
 
 </html>
