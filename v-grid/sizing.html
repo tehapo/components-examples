@@ -8,6 +8,21 @@
   <link rel="stylesheet" href="../demo.css">
   <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="common.html">
+
+  <style>
+    .activity-fix {
+      color: #ff6961;
+    }
+    .activity-feed {
+      color: #03c03c;
+    }
+    .activity-launch {
+      color: #966fd6;
+    }
+    .activity-deliver {
+      color: #779ecb;
+    }
+  </style>
 </head>
 
 <body>
@@ -64,7 +79,8 @@
       </code>
       <code demo-var="grid">
         grid.rowClassGenerator = function(row) {
-          return row.data[3] === "Grid" ? "bold" : "";
+          var activity = row.data[2];
+          return 'activity-' + activity.toLowerCase();
         };
       </code>
     </code-example>
@@ -88,7 +104,11 @@
       </code>
       <code demo-var="grid">
         grid.cellClassGenerator = function(cell) {
-          return cell.row.index % 3 === cell.index ? "bold" : "";
+          if (cell.index == 2) {
+          var activity = cell.row.data[2];
+            return 'activity-' + activity.toLowerCase();
+          }
+          return '';
         };
       </code>
     </code-example>
