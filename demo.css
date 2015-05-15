@@ -63,3 +63,8 @@ button {
 table-of-contents ol {
   color: rgba(0,0,0,0.4);
 }
+
+.bold {
+  font-weight: bold;
+}
+

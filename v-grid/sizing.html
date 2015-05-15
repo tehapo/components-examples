@@ -46,5 +46,53 @@
     </code-example>
   </section>
 
+  <section>
+    <h3>Styling Rows</h3>
+    <p>Grid data rows can be labeled with individual class names by setting a <code>rowClassGenertor</code>.</p>
+    <code-example>
+      <v-grid rows=5 demo hidden>
+        <table>
+          <colgroup>
+            <col header-text="Name">
+            <col header-text="Surname">
+            <col header-text="Activity">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        grid.rowClassGenerator = function(row) {
+          return row.data[3] === "Grid" ? "bold" : "";
+        };
+      </code>
+    </code-example>
+  </section>
+
+  <section>
+    <h3>Styling Cells</h3>
+    <p>Single data cells can be styled with the help of a <code>cellClassGenertor</code>.</p>
+    <code-example>
+      <v-grid rows=5 demo hidden>
+        <table>
+          <colgroup>
+            <col header-text="Name">
+            <col header-text="Surname">
+            <col header-text="Activity">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid" hidden>
+        grid.data.source = myBigData;
+      </code>
+      <code demo-var="grid">
+        grid.cellClassGenerator = function(cell) {
+          return cell.row.index % 3 === cell.index ? "bold" : "";
+        };
+      </code>
+    </code-example>
+  </section>
+
 </body>
 </html>
