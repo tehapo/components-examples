@@ -68,3 +68,10 @@ table-of-contents ol {
   font-weight: bold;
 }
 
+.v-ie code-example > * {
+  width: 100%;
+}
+
+.v-ie code-example code {
+  height: auto !important;
+}
