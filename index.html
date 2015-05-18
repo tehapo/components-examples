@@ -9,6 +9,12 @@
   <script src="bower_components/code-example/vendor/prismjs/prism.js"></script>
   <link rel="stylesheet" href="bower_components/code-example/vendor/prismjs/prism.css">
   <link rel="stylesheet" href="demo.css">
+  <style type="text/css">
+    #readme code {
+      font-size: 12px;
+      overflow: auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -23,9 +29,16 @@
     readme.innerHTML = marked(xmlhttp.responseText);
 
     [].forEach.call(readme.querySelectorAll("code"), function(code) {
+      var pre = code.parentElement;
+      var parent = pre.parentElement;
+      parent.appendChild(code);
+      parent.removeChild(pre);
+
       code.className = "language-markup";
       Prism.highlightElement(code);
     });
+
+    readme.querySelector("[href$='components-examples']").parentElement.style.display = "none";
 
   </script>
 
