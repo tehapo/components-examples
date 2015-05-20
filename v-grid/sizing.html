@@ -22,6 +22,15 @@
     .activity-deliver {
       color: #779ecb;
     }
+
+    td.white {
+      font-size: xx-large;
+    }
+
+    td.black {
+      background-color: #77dd77 !important;
+      font-size: xx-large;
+    }
   </style>
 </head>
 
@@ -63,7 +72,7 @@
 
   <section>
     <h3>Styling Rows</h3>
-    <p>Grid data rows can be labeled with individual class names by setting a <code>rowClassGenertor</code>.</p>
+    <p>Grid data rows can be labeled with individual class names by setting a <code>rowClassGenerator</code>.</p>
     <code-example>
       <v-grid rows=5 demo hidden>
         <table>
@@ -88,7 +97,7 @@
 
   <section>
     <h3>Styling Cells</h3>
-    <p>Single data cells can be styled with the help of a <code>cellClassGenertor</code>.</p>
+    <p>Single data cells can be styled with the help of a <code>cellClassGenerator</code>.</p>
     <code-example>
       <v-grid rows=5 demo hidden>
         <table>
@@ -105,10 +114,48 @@
       <code demo-var="grid">
         grid.cellClassGenerator = function(cell) {
           if (cell.index == 2) {
-          var activity = cell.row.data[2];
+            var activity = cell.row.data[2];
             return 'activity-' + activity.toLowerCase();
           }
           return '';
+        };
+      </code>
+    </code-example>
+  </section>
+
+  <section>
+    <h3>Chessboard</h3>
+    <p>Simple chessboard styled with the help of a <code>cellClassGenerator</code>
+      which takes row indexes and column indexes into account.</p>
+    <code-example>
+      <v-grid rows=8 demo hidden>
+        <table>
+          <colgroup>
+            <col header-text="a">
+            <col header-text="b">
+            <col header-text="c">
+            <col header-text="d">
+            <col header-text="e">
+            <col header-text="f">
+            <col header-text="g">
+            <col header-text="h">
+          </colgroup>
+        </table>
+      </v-grid>
+      <code demo-var="grid">
+        grid.data.source = [
+          ['&#9820;','&#9822;','&#9821;','&#9819;','&#9818;','&#9821;','&#9822;','&#9820;'],
+          ['&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;'],
+          ['','','','','','','',''],
+          ['','','','','','','',''],
+          ['','','','','','','',''],
+          ['','','','','','','',''],
+          ['&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;'],
+          ['&#9820;','&#9822;','&#9821;','&#9819;','&#9818;','&#9821;','&#9822;','&#9820;']
+        ];
+        grid.cellClassGenerator = function(cell) {
+          var white = (cell.row.index - (cell.index % 2)) % 2 == 0;
+          return white ? 'white' : 'black';
         };
       </code>
     </code-example>
