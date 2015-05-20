@@ -5,6 +5,12 @@
 <link rel='import' href='vaadin-grid-import.html'>
 <link rel='import' href='../../polymer/polymer.html'>
 
+<style>
+  v-grid > table {
+    display: none;
+  }
+</style>
+
 <dom-module id="v-grid">
 <style>
   /* Functional properties */
@@ -19,6 +25,8 @@
 
   :host(.loading) {
     opacity: 0;
+    height: 0;
+    transition: none;
   }
 
   :host,
@@ -447,8 +455,29 @@
   :focus .v-grid-row-focused:before {
     opacity: 1;
   }
+
+  #measure {
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+    position: relative !important;
+    float: left !important;
+    margin-left: -100% !important;
+    opacity: 0 !important;
+  }
+
+  #measureobject {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
 </style>
   <template>
+    <div id="measure" class="v-grid">
+      <object id="measureobject" class="v-grid" type="text/html"></object>
+    </div>
+    <content></content>
   </template>
 </dom-module>
 
@@ -461,17 +490,6 @@
 
       properties: {
         /**
-         * The columns array
-         *
-         * @property columns
-         * @type array
-         */
-        columns: {
-          type: Array,
-          observer: 'columnsChanged'
-        },
-
-        /**
          * The row editor specific fields
          *
          * @property editor
@@ -479,6 +497,7 @@
          */
         editor: {
           type: Object,
+          readOnly: true,
           value: function() {
             var _this = this;
             return {
@@ -529,6 +548,7 @@
          */
         data: {
           type: Object,
+          readOnly: true,
           value: function() {
             var _this = this;
             return {
@@ -578,6 +598,7 @@
          */
         header: {
           type: Object,
+          readOnly: true,
           value: function() {
             var _this = this;
             return {
@@ -627,6 +648,7 @@
          */
         footer: {
           type: Object,
+          readOnly: true,
           value: function() {
             var _this = this;
             return {
@@ -657,6 +679,7 @@
 
         selection: {
           type: Object,
+          readOnly: true,
           value: function() {
             var _this = this;
             return {
@@ -701,22 +724,6 @@
         },
       },
 
-      columnsChanged: function() {
-        var oldcols = this._grid.getColumns();
-        var newcols = this.columns;
-        if (!oldcols._obs || newcols != oldcols) {
-          if (oldcols._obs) {
-            Polymer.ArrayObserve.unobserve(oldcols, oldcols._obs);
-          }
-          var _this = this;
-          newcols._obs = function() {
-            _this._grid.setColumns(newcols);
-          };
-          Polymer.ArrayObserve.observe(newcols, newcols._obs);
-        }
-        this._grid.setColumns(newcols);
-      },
-
       attributeChanged: function(name, type, value) {
         switch (name) {
           case 'disabled':
@@ -756,23 +763,35 @@
 
       ready: function() {
         var _this = this;
-        // Set read-only properties
-        ["data", "editor", "header", "footer"].forEach(function(prop) {
-          Object.defineProperty(_this, prop, {
-            writable: false
-          });
-        });
         setTimeout(function() {
           for (var i = 0; i < _this.attributes.length; i++) {
             _this.attributeChanged(_this.attributes[i].nodeName, null, _this.attributes[i].nodeValue);
           }
         }, 1);
 
-        this.columns = _this._grid.getColumns();
+        this._bindResizeListener();
+      },
+
+      _bindResizeListener: function() {
+        var _this = this;
+        this.$.measureobject.addEventListener("load", function() {
+          this.contentDocument.defaultView.addEventListener('resize', function(e) {
+            _this._grid.redraw();
+          });
+          _this._grid.redraw();
+        });
+        this.$.measureobject.data = "about:blank";
       },
 
       attached: function() {
         this._grid.attached(this, Polymer.dom(this).querySelector("table"), Polymer.dom(this.root));
+
+        // hide until fully loaded
+        var classList = this.classList;
+        classList.add('loading');
+        this.then(function() {
+          classList.remove('loading');
+        });
       },
 
       /**
@@ -918,6 +937,25 @@
         this._grid.setRows(rows);
         this.reflectPropertyToAttribute("rows");
       },
+      /**
+       * The columns array
+       *
+       * @property columns
+       * @type array
+       */
+      get columns() {
+        return this._grid.getColumns();
+      },
+      set columns(cols) {
+        this._grid.setColumns(cols);
+      },
+      /**
+       * Executes a callback when the grid has finished any pending work.
+       *
+       * @method them
+       * @param {Function} callback
+       * @return a chainable promise
+       */
       then: function(cb) {
         return this._grid.then(cb);
       }
@@ -926,9 +964,7 @@
     // Give some time to gwt async processes to run (we need this in FF)
     setTimeout(function() {
       vaadin._v_grid_ready = true;
-      var evt = document.createEvent("HTMLEvents");
-      evt.initEvent("v-grid-ready", false, true);
-      document.dispatchEvent(evt);
+      document.dispatchEvent(new CustomEvent('v-grid-ready'));
     }, 5);
 
   } // End loadComponent function
