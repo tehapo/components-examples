@@ -31,6 +31,10 @@
       background-color: #77dd77 !important;
       font-size: xx-large;
     }
+
+    .chessboard .v-grid-cell {
+      padding: 0;
+    }
   </style>
 </head>
 
@@ -128,17 +132,17 @@
     <p>Simple chessboard styled with the help of a <code>cellClassGenerator</code>
       which takes row indexes and column indexes into account.</p>
     <code-example>
-      <v-grid rows=8 demo hidden>
+      <v-grid rows=8 demo hidden class="chessboard">
         <table>
           <colgroup>
-            <col header-text="a">
-            <col header-text="b">
-            <col header-text="c">
-            <col header-text="d">
-            <col header-text="e">
-            <col header-text="f">
-            <col header-text="g">
-            <col header-text="h">
+            <col header-text="a" width="32">
+            <col header-text="b" width="32">
+            <col header-text="c" width="32">
+            <col header-text="d" width="32">
+            <col header-text="e" width="32">
+            <col header-text="f" width="32">
+            <col header-text="g" width="32">
+            <col header-text="h" width="32">
           </colgroup>
         </table>
       </v-grid>
