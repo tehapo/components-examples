@@ -23,7 +23,7 @@
   <script>
     var xmlhttp;
     xmlhttp=new XMLHttpRequest();
-    xmlhttp.open("GET", "https://cdn.rawgit.com/vaadin/components/master/vaadin-components-package/README.md", false);
+    xmlhttp.open("GET", "https://cdn.rawgit.com/vaadin/components/0.3.0-rc1/vaadin-components-package/README.md", false);
     xmlhttp.send();
     var readme = document.getElementById("readme");
     readme.innerHTML = marked(xmlhttp.responseText);

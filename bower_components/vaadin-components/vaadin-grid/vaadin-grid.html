@@ -11,6 +11,9 @@
   }
 </style>
 
+<!--
+Vaadin v-grid is a grid component fully configurable and customizable, plenty of features and with the mind set on performance.
+-->
 <dom-module id="v-grid">
 <style>
   /* Functional properties */
@@ -438,7 +441,7 @@
 
   /* Focus styles */
 
-  .v-grid-row-focused:before {
+  .v-grid-row-focused:after {
     content: "";
     position: absolute;
     z-index: 1;
@@ -452,7 +455,7 @@
     transition: opacity 300ms;
   }
 
-  :focus .v-grid-row-focused:before {
+  :focus .v-grid-row-focused:after {
     opacity: 1;
   }
 
@@ -493,7 +496,7 @@
          * The row editor specific fields
          *
          * @property editor
-         * @type Object
+         * @type {Editor}
          */
         editor: {
           type: Object,
@@ -544,7 +547,7 @@
          * The data source object for the grid.
          *
          * @property data
-         * @type Object
+         * @type {Data}
          */
         data: {
           type: Object,
@@ -568,13 +571,6 @@
 
                 this._source = source;
               },
-              /**
-               * Sets the sort order to use. Setting this causes the Grid to re-sort
-               * itself. If set to null, the sort order is cleared.
-               *
-               * @attribute sortOrder
-               * @type array
-               */
               get sortOrder() {
                 return _this._grid.getSortOrder();
               },
@@ -594,7 +590,7 @@
          * Object for manipulating header rows
          *
          * @property header
-         * @type Object
+         * @type {Header}
          */
         header: {
           type: Object,
@@ -614,13 +610,6 @@
               setRowClassName: function(rowIndex, className) {
                 _this._grid.getStaticSection().setHeaderRowClassName(rowIndex, className);
               },
-              /**
-               * Sets the default row of the header. The default row is a special header
-               * row providing a user interface for sorting columns.
-               *
-               * @attribute rowIndex
-               * @type number
-               */
               get defaultRow() {
                 return _this._grid.getStaticSection().getDefaultHeader();
               },
@@ -644,7 +633,7 @@
          * Object for manipulating footer rows
          *
          * @property footer
-         * @type Object
+         * @type {Footer}
          */
         footer: {
           type: Object,
@@ -677,6 +666,12 @@
           }
         },
 
+        /**
+         * Selection model
+         *
+         * @property selection
+         * @type {Selection}
+         */
         selection: {
           type: Object,
           readOnly: true,
@@ -750,10 +745,13 @@
         /**
          * @event select
          */
-        'select': 'onSelect'
+        /**
+         * @event selectionmodechange
+         */
+        'selectionmodechange': 'onSelectionModeChange'
       },
 
-      onSelect: function() {
+      onSelectionModeChange: function() {
         this.serializeValueToAttribute(this.selection.mode, "selection-mode");
       },
 
@@ -769,7 +767,6 @@
           }
         }, 1);
 
-        this._bindResizeListener();
       },
 
       _bindResizeListener: function() {
@@ -778,19 +775,26 @@
           this.contentDocument.defaultView.addEventListener('resize', function(e) {
             _this._grid.redraw();
           });
-          _this._grid.redraw();
+
+          _this.then(function() {
+            // ...because one then just isn't enough.
+            _this.then(function() {
+              _this._grid.redraw();
+            });
+          });
         });
         this.$.measureobject.data = "about:blank";
       },
 
       attached: function() {
+        var _this = this;
         this._grid.attached(this, Polymer.dom(this).querySelector("table"), Polymer.dom(this.root));
+        this._bindResizeListener();
 
         // hide until fully loaded
-        var classList = this.classList;
-        classList.add('loading');
+        this.toggleClass('loading', true);
         this.then(function() {
-          classList.remove('loading');
+          _this.toggleClass('loading', false);
         });
       },
 
@@ -839,7 +843,7 @@
        * Adds new column
        *
        * @method addColumn
-       * @param {Object} column
+       * @param {Column} column
        * @param {string} beforeColumn
        */
       addColumn: function(column, beforeColumn) {
@@ -941,7 +945,7 @@
        * The columns array
        *
        * @property columns
-       * @type array
+       * @type {Array<Column>}
        */
       get columns() {
         return this._grid.getColumns();
@@ -954,10 +958,10 @@
        *
        * @method them
        * @param {Function} callback
-       * @return a chainable promise
+       * @return {Promise}
        */
-      then: function(cb) {
-        return this._grid.then(cb);
+      then: function(callback) {
+        return this._grid.then(callback);
       }
     }); // End Polymer prototype
 
