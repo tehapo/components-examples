@@ -45,6 +45,7 @@ pre, code {
   font-family: Source Code Pro, Consolas, monospace;
   background-color: rgba(0,0,0,0.06);
   padding: 0 0.2em;
+  max-height: 300px !important;
 }
 
 p {
@@ -52,7 +53,7 @@ p {
 }
 
 section {
-  margin-bottom: 6em;
+  margin-bottom: 1.5em;
 }
 
 button {
