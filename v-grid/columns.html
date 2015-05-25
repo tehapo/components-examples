@@ -79,7 +79,7 @@
       <v-grid demo>
         <table>
           <colgroup>
-            <col header-text="Name" width=30 flex=1>
+            <col header-text="Name" width=100 flex=1>
             <col header-text="Surname" max-width=200 flex=2>
             <col header-text="Activity" min-width=100 flex=1>
           </colgroup>
@@ -90,7 +90,7 @@
       </code>
       <code demo-var="grid">
         // Setting the width properties with JS api
-        grid.columns[0].width = 30;
+        grid.columns[0].width = 100;
         grid.columns[1].maxWidth = 200;
         grid.columns[2].minWidth = 100;
         // Setting the flex properties with JS api
@@ -111,11 +111,11 @@
       <v-grid rows=5 selection-mode="multi" demo hidden>
         <table>
           <colgroup>
-            <col width=300 header-text="Name">
-            <col width=300 header-text="Surname">
-            <col width=300 header-text="Operation">
-            <col width=300 header-text="Product">
-            <col width=300 header-text="Progress">
+            <col header-text="Name">
+            <col header-text="Surname">
+            <col header-text="Operation">
+            <col header-text="Product">
+            <col header-text="Progress">
           </colgroup>
         </table>
       </v-grid>
