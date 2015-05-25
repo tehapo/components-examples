@@ -10,7 +10,6 @@
     "vaadin components"
   ],
   "license": "Apache License 2.0",
-  "private": true,
   "ignore": [
     "bower_components"
   ],
