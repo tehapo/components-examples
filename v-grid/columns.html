@@ -108,7 +108,7 @@
     containing the checkboxes is frozen by default but setting <code>grid.frozenColumns</code> to
     -1 will unfreeze it as well.</p>
     <code-example>
-      <v-grid rows=5 selection-mode="multi" demo hidden>
+      <v-grid selection-mode="multi" frozen-columns="1" demo>
         <table>
           <colgroup>
             <col header-text="Name">
@@ -121,13 +121,12 @@
       </v-grid>
       <code demo-var="grid" hidden>
         grid.data.source = myBigData;
-        grid.then(function(){
-          grid.columns[4].valueGenerator = function(data) {
-            return Math.random(1).toFixed(2);
-          };
-        });
+        grid.columns[4].valueGenerator = function(data) {
+          return Math.random(1).toFixed(2);
+        };
       </code>
       <code demo-var="grid">
+        // Alternatively set the frozen columns in JS
         grid.frozenColumns = 1;
       </code>
     </code-example>
