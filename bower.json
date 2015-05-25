@@ -1,21 +1,18 @@
 {
-  "name": "components-examples",
-  "version": "0.0.1",
+  "name": "vaadin-components-examples",
+  "version": "0.3.0-snapshot",
   "authors": [
     "Vaadin Ltd"
   ],
   "keywords": [
     "web-components",
-    "vaadin"
+    "vaadin",
+    "vaadin components"
   ],
   "license": "Apache License 2.0",
   "private": true,
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "bower_components"
   ],
   "dependencies": {
     "vaadin-components": "vaadin-components#0.3.0-snapshot",
