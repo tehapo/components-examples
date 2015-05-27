@@ -91,56 +91,6 @@
     </code-example>
   </section>
 
-  <section>
-    <h3>Generated columns</h3>
-    <p>ValueGenerator functions may be assigned to columns to occupy their cells with custom values
-    instead of the ones defined by the datasource directly. This also allows creating additional
-    columns with any generated content data.</p>
-    <code-example source>
-      <v-grid demo hidden>
-        <table>
-          <colgroup>
-            <col header-text="Name">
-            <col header-text="Activity">
-            <col header-text="Progress">
-          </colgroup>
-        </table>
-      </v-grid>
-      <code hidden>
-        var employees = [];
-        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
-        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
-        var activities = ["Design","Implement","Polish","Deliver"];
-        var targets = ["soup","Vaadin","dog","world peace"];
-        for (var i = 0; i < 400; i++){
-            var row = [];
-            [names, surnames, activities, targets].forEach(function(array){
-              row.push(array[Math.floor(Math.random()*array.length)]);
-            });
-            employees.push(row);
-        }
-      </code>
-      <code demo-var="grid">
-        var grid = grid || document.querySelector("v-grid");
-
-        window.addEventListener("WebComponentsReady", function() {
-          grid.data.source = employees;
-          // code
-
-          grid.columns[1].valueGenerator = function(data) {
-            return data[2] + " the " + data[3];
-          };
-          grid.columns[2].valueGenerator = function(data) {
-            // Because we're generating random numbers here,
-            // the value changes every time it's scrolled out of viewport.
-            return Math.random(1).toFixed(2);
-          };
-          // end-code
-        });
-      </code>
-
-    </code-example>
-  </section>
 </body>
 
 </html>

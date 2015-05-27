@@ -169,8 +169,8 @@
         window.addEventListener("WebComponentsReady", function() {
           grid.data.source = employees;
 
-          grid.columns[4].valueGenerator = function(data) {
-            return Math.random(1).toFixed(2);
+          grid.columns[4].renderer = function(cell) {
+            cell.element.textContent = Math.random(1).toFixed(2);
           };
           // code
           // Alternatively set the frozen columns in JS
