@@ -231,6 +231,61 @@
     </code-example>
   </section>
 
+  <section>
+    <h3>Remote data source</h3>
+    <p>Data fetched dynamically from a remote source may be hooked to Grid with a custom data source
+    implementation.</p>
+    <code-example source>
+      <v-grid demo selection-mode="multi">
+        <table>
+          <col name="index" header-text="#" width="48">
+          <col name="user.picture.thumbnail" width="54">
+          <col name="user.name.first" header-text="First Name">
+          <col name="user.name.last" header-text="Last Name">
+          <col name="user.email" header-text="Email" flex>
+        </table>
+      </v-grid>
+      <code demo-var="grid">
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          // code
+          var dataSourceSize = 1000;
+          grid.data.source = function(req) {
+            // Fetch the JSON data from a URL
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState == XMLHttpRequest.DONE ) {
+                if(xhr.status == 200){
+                  var json = JSON.parse(xhr.responseText);
+                  req.success(json.results, dataSourceSize);
+                }
+              }
+            }
+            var rowsNeeded = req.count > 0 ? req.count : 10;
+            xhr.open("GET", "http://api.randomuser.me/?results=" + rowsNeeded, true);
+            xhr.send();
+          };
+
+          // Add a renderer for the index column
+          grid.columns[0].renderer = function(cell) {
+              cell.element.innerHTML = cell.row.index;
+          }
+
+          // Add a renderer for the picture column
+          grid.columns[1].renderer = function(cell) {
+            cell.element.innerHTML = "";
+            var img = document.createElement("img");
+            img.style.width = "24px";
+            img.setAttribute("src", cell.data);
+            cell.element.appendChild(img);
+          }
+          // end-code
+        });
+      </code>
+    </code-example>
+  </section>
+
 </body>
 
 </html>
