@@ -97,7 +97,7 @@
     <h3>Styling Rows</h3>
     <p>Grid data rows can be labeled with individual class names by setting a <code>rowClassGenerator</code>.</p>
     <code-example source>
-      <v-grid rows=5 demo hidden>
+      <v-grid demo hidden>
         <table>
           <colgroup>
             <col header-text="Name">
@@ -131,7 +131,6 @@
             return 'activity-' + activity.toLowerCase();
           };
           // end-code
-          grid._grid.refresh();
         });
       </code>
     </code-example>
@@ -141,7 +140,7 @@
     <h3>Styling Cells</h3>
     <p>Single data cells can be styled with the help of a <code>cellClassGenerator</code>.</p>
     <code-example source>
-      <v-grid rows=5 demo hidden>
+      <v-grid demo hidden>
         <table>
           <colgroup>
             <col header-text="Name">
@@ -179,7 +178,6 @@
             return '';
           };
           // end-code
-          grid._grid.refresh();
         });
       </code>
     </code-example>

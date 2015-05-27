@@ -26,7 +26,7 @@
     for same functionality. Excluding the <code>default row</code> property headers and
     footers share the same exact API.</p>
     <code-example source>
-      <v-grid rows=3 demo>
+      <v-grid demo>
         <table>
           <colgroup>
             <col><col><col><col>
@@ -70,7 +70,6 @@
           grid.footer.addRow();
           grid.footer.removeRow(0);
           // end-code
-          grid._grid.refresh();
         });
       </code>
 
@@ -86,7 +85,7 @@
     with the cell API <code>header.getCell(rowIndex, colIndex).colspan</code>.</p>
 
     <code-example source>
-      <v-grid rows=3 demo>
+      <v-grid demo>
         <table>
           <colgroup>
             <col><col><col><col>
@@ -125,7 +124,6 @@
           grid.header.getCell(0, 0).colspan = 2;
           grid.header.getCell(0, 2).colspan = 2;
           // end-code
-          grid._grid.refresh();
         });
       </code>
 
@@ -194,7 +192,6 @@
           // code
           grid.header.getCell(1, 0).content = filterElement;
           // end-code
-          grid._grid.refresh();
         });
       </code>
     </code-example>
@@ -206,7 +203,7 @@
       <code>class</code> attribute in the lightDom API or <code>header.setRowClassName</code>
       and <code>cell.className</code> in the JavaScript API.</p>
     <code-example source>
-      <v-grid rows=3 demo>
+      <v-grid demo>
         <table>
           <colgroup>
             <col><col>
@@ -252,7 +249,7 @@
     <p>Default row in the grid header is the row that contains sort-indicators if sorting
     rules are applied and the "select all" chechbox on multi-select mode.</p>
     <code-example source>
-      <v-grid rows=3 selection-mode="multi" demo>
+      <v-grid selection-mode="multi" demo>
         <table>
           <colgroup>
             <col sortable sort-direction="asc"><col sortable sort-direction="desc"><col><col>
