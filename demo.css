@@ -20,6 +20,14 @@ h2 {
   color: rgba(0,0,0,0.56);
 }
 
+h5 {
+  margin-bottom: 0.5em;
+}
+
+h5 + p {
+  margin-top: 0.5em;
+}
+
 a {
   text-decoration: none;
   color: #03A9F4;
@@ -75,4 +83,12 @@ table-of-contents ol {
 
 .v-ie code-example code {
   height: auto !important;
+}
+
+blockquote {
+  font-size: 0.9em;
+  color: rgba(0,0,0,0.56);
+  border-left: 2px solid rgba(0,0,0,0.2);
+  padding-left: 1em;
+  margin: 1em 2em;
 }
