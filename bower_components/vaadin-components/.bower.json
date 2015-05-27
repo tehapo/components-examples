@@ -24,7 +24,7 @@
   "_resolution": {
     "type": "version",
     "tag": "0.3.0-snapshot",
-    "commit": "219db4108ec5dc8af9cfa3e1271b4e5abf1d8c73"
+    "commit": "10168677ef1c34f4937f391cd24d5893d2c04507"
   },
   "_source": "git://github.com/vaadin-bower/vaadin-components.git",
   "_target": "0.3.0-snapshot",
