@@ -1,7 +1,5 @@
 # components-examples
-Examples for Vaadin Components
 
-This is the project with all examples to learn about vaadin web-components.
+Code examples for [Vaadin Components](https://github.com/vaadin/components).
 
-Please visit the [ShowCase](http://vaadin.github.io/components-examples/) pages to take a look to all use
-cases and code example.
+View the [live site](http://vaadin.github.io/components-examples/) to see the code examples side-by-side with its corresponding live example.

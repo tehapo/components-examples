@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>v-grid Code Examples. DOM API</title>
+  <title>v-grid Code Examples - Polymer Integration</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../demo.css">
@@ -13,15 +13,15 @@
 <body>
   <section>
     <h1><a href="./">v-grid</a>
-      <span>Polymer integration</span>
+      <span>Polymer Integration</span>
     </h1>
     <table-of-contents select="h3" class="toc"></table-of-contents>
   </section>
 
   <section>
-    <h3 id="headers">Polymer integration</h3>
+    <h3 id="headers">Polymer Integration</h3>
     <p></p>
-    <code-example>
+    <code-example source>
       <div demo>
         <dom-module id="my-grid-with-template" demo>
           <template>
@@ -44,20 +44,24 @@
           </template>
         </dom-module>
         <my-grid-with-template></my-grid-with-template>
-      </div> 
+      </div>
       <code demo-var="grid">
-        Polymer({
-          is: 'my-grid-with-template',
-          ready: function() {
-            this.mydata = [
-              {"name": "Grid", "value": "10000", "progress": 0.8},
-              {"name": "Vaadin X", "value": "999999", "progress": 0.8}
-            ];
-          }
-        }) ;
+        document.addEventListener("WebComponentsReady", function() {
+          // code
+          Polymer({
+            is: 'my-grid-with-template',
+            ready: function() {
+              this.mydata = [
+                {"name": "Project A", "value": "10000", "progress": 0.8},
+                {"name": "Project B", "value": "999999", "progress": 0.8}
+              ];
+            }
+          });
+          // end-code
+        });
       </code>
     </code-example>
   </section>
- 
+
 </body>
 </html>
