@@ -12,7 +12,7 @@
   <style type="text/css">
     #readme code {
       font-size: 12px;
-      overflow: auto;
+      max-height: none !important;
     }
   </style>
 </head>
@@ -29,8 +29,9 @@
     var obj = JSON.parse(xmlhttp.responseText);
     readme.innerHTML = marked(atob(obj.content.replace(/\n/g,'')));
 
-    [].forEach.call(readme.querySelectorAll("code"), function(code) {
-      var pre = code.parentElement;
+    [].forEach.call(readme.querySelectorAll("pre"), function(pre) {
+      var code = document.createElement("code");
+      code.innerHTML = pre.innerHTML;
       var parent = pre.parentElement;
       parent.appendChild(code);
       parent.removeChild(pre);
@@ -39,23 +40,7 @@
       Prism.highlightElement(code);
     });
 
-    readme.querySelector("[href$='components-examples']").parentElement.style.display = "none";
-
   </script>
-
-  <section>
-    <h2>API Documentation</h2>
-    <ul class="big">
-      <li><a href="http://manolo.github.io/components-apidoc/index.html#v-grid">v-grid</a> - API for the Grid component</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Code Examples</h2>
-    <ul class="big">
-      <li><a href="v-grid/">v-grid</a> – Examples for the powerful data grid component</li>
-    </ul>
-  </section>
 
 </body>
 </html>
