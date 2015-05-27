@@ -33,7 +33,7 @@
       var code = document.createElement("code");
       code.innerHTML = pre.innerHTML;
       var parent = pre.parentElement;
-      parent.appendChild(code);
+      parent.insertBefore(code, pre);
       parent.removeChild(pre);
 
       code.className = "language-markup";
