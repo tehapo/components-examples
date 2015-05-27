@@ -27,7 +27,7 @@
     xmlhttp.send();
     var readme = document.getElementById("readme");
     var obj = JSON.parse(xmlhttp.responseText);
-    readme.innerHTML = marked(atob(obj.content));
+    readme.innerHTML = marked(atob(obj.content.replace(/\n/g,'')));
 
     [].forEach.call(readme.querySelectorAll("code"), function(code) {
       var pre = code.parentElement;
