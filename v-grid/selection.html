@@ -24,7 +24,7 @@
     <p>Data rows can be selected either trough UI
       interaction (by clicking, tapping or hitting space on a highlighted cell) or alternatively by using the
       selection JavaScript API.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo hidden>
         <table>
           <colgroup>
@@ -48,8 +48,14 @@
       </v-grid>
 
       <code demo-var="grid">
-        grid.selection.deselect(0);
-        grid.selection.select(1);
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          // code
+          grid.selection.deselect(0);
+          grid.selection.select(1);
+          // end-code
+        });
       </code>
     </code-example>
   </section>
@@ -67,7 +73,7 @@
     <p>
       You can toggle between <b>multi</b> and <b>all</b> modes by clicking the checkbox on Grid header.
     </p>
-    <code-example>
+    <code-example source>
       <v-grid demo selection-mode="multi">
         <table>
           <colgroup>
@@ -77,7 +83,23 @@
           </colgroup>
         </table>
       </v-grid>
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
+      </code>
       <code demo-var="grid" hidden>
+        var grid = grid || document.querySelector("v-grid");
+
         var controls = document.createElement("div");
         controls.innerHTML = 'Selection mode:';
 
@@ -93,8 +115,6 @@
         controls.appendChild(modeSelect);
         grid.parentElement.appendChild(controls);
 
-        // Set a datasource for the Grid
-        grid.data.source = myBigData;
         // Bind the mode select value to vgrid.selection.mode
         modeSelect.addEventListener("change", function() {
           grid.selection.mode = modeSelect.value;
@@ -104,8 +124,15 @@
         });
       </code>
       <code demo-var="grid">
-        // Set the selection mode to "multi"
-        grid.selection.mode = "multi";
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Set the selection mode to "multi"
+          grid.selection.mode = "multi";
+          // end-code
+        });
       </code>
     </code-example>
   </section>
@@ -116,7 +143,7 @@
       function which returns an array of integers for you to process further.</p>
     <p>This works fine on most cases with <i>single</i> and <i>multi</i> selection modes, but if your grid contains tons
       of data and the selection mode is set to <i>all</i>, you're better off with <code>selection.deselected()</code>.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo selection-mode="multi" hidden>
         <table>
           <colgroup>
@@ -126,15 +153,32 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        // Set a datasource for the Grid
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
       <code demo-var="grid">
-        // Log the selections / deselection to console on select event
-        grid.addEventListener("select", function() {
-          console.log("Selected: " + grid.selection.selected());
-          console.log("Deselected: " + grid.selection.deselected());
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Log the selections / deselection to console on select event
+          grid.addEventListener("select", function() {
+            console.log("Selected: " + grid.selection.selected());
+            console.log("Deselected: " + grid.selection.deselected());
+          });
+          // end-code
         });
       </code>
     </code-example>
@@ -147,7 +191,7 @@
     as the first argument so you can loop trough all the selections without ever populating an array.</p>
     <p>If however your iterator function returns a value, then it's considered a mapper function meaning that
     the selection API function will return an array of pre-mapped values.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo selection-mode="multi" hidden>
         <table>
           <colgroup>
@@ -157,22 +201,39 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        // Set a datasource for the Grid
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
-      <code demo-var="grid">
-        // Log selected designers list on select event
-        grid.addEventListener("select", function() {
-          console.log("Selected designers:");
-          grid.selection.selected(function(index) {
-            var data = myBigData[index];
-            if (data[2] === "Design") {
-              console.log("-" + data[0] + " " + data[1]);
-            }
-          });
-        });
 
+      <code demo-var="grid">
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Log selected designers list on select event
+          grid.addEventListener("select", function() {
+            console.log("Selected designers:");
+            grid.selection.selected(function(index) {
+              var data = employees[index];
+              if (data[2] === "Design") {
+                console.log("-" + data[0] + " " + data[1]);
+              }
+            });
+          });
+          // end-code
+        });
       </code>
     </code-example>
   </section>
@@ -184,7 +245,7 @@
     the selections in batches. <code>selection.size</code> property comes in handy here.</p>
     <p>All the three parameters <i>(iterator/mapper, startIndex, endIndex)</i> have default values so any of
     them can be omitted (or set as undefined).</p>
-    <code-example>
+    <code-example source>
       <v-grid demo selection-mode="multi" hidden>
         <table>
           <colgroup>
@@ -194,16 +255,33 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        // Set a datasource for the Grid
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
       <code demo-var="grid">
-        // Log selected indexes in batches of 5
-        grid.addEventListener("select", function() {
-          for (var i = 0; i < grid.selection.size; i += 5){
-            console.log(grid.selection.selected(undefined, i, i+4));
-          }
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Log selected indexes in batches of 5
+          grid.addEventListener("select", function() {
+            for (var i = 0; i < grid.selection.size; i += 5){
+              console.log(grid.selection.selected(undefined, i, i+4));
+            }
+          });
+          // end-code
         });
       </code>
     </code-example>

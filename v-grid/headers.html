@@ -25,7 +25,7 @@
     <p>JavaScript API exposes the <code>header</code> and <code>footer</code> objects
     for same functionality. Excluding the <code>default row</code> property headers and
     footers share the same exact API.</p>
-    <code-example>
+    <code-example source>
       <v-grid rows=3 demo>
         <table>
           <colgroup>
@@ -44,16 +44,34 @@
           </tfoot>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        // Set a datasource for the Grid
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
       <code demo-var="grid">
-        // Adding and removing headers and footers in JavaScript
-        grid.header.addRow(1, ["First Name", "Last Name", "Operation", "Product"]);
-        grid.header.removeRow(2);
-        grid.footer.addRow();
-        grid.footer.removeRow(0);
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Adding and removing headers and footers in JavaScript
+          grid.header.addRow(1, ["First Name", "Last Name", "Operation", "Product"]);
+          grid.header.removeRow(2);
+          grid.footer.addRow();
+          grid.footer.removeRow(0);
+          // end-code
+          grid._grid.refresh();
+        });
       </code>
 
     </code-example>
@@ -67,7 +85,7 @@
     <p>The value can be set either declaratively trough the lightDom API or programmatically
     with the cell API <code>header.getCell(rowIndex, colIndex).colspan</code>.</p>
 
-    <code-example>
+    <code-example source>
       <v-grid rows=3 demo>
         <table>
           <colgroup>
@@ -83,14 +101,32 @@
           </tfoot>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        // Set a datasource for the Grid
-        grid.data.source = myBigData;
-      </code>
+      <code hidden>
+         var employees = [];
+         var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+         var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+         var activities = ["Design","Implement","Polish","Deliver"];
+         var targets = ["soup","Vaadin","dog","world peace"];
+         for (var i = 0; i < 400; i++){
+             var row = [];
+             [names, surnames, activities, targets].forEach(function(array){
+               row.push(array[Math.floor(Math.random()*array.length)]);
+             });
+             employees.push(row);
+         }
+       </code>
       <code demo-var="grid">
-        // Cell API can be used to define cell colspans.
-        grid.header.getCell(0, 0).colspan = 2;
-        grid.header.getCell(0, 2).colspan = 2;
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Cell API can be used to define cell colspans.
+          grid.header.getCell(0, 0).colspan = 2;
+          grid.header.getCell(0, 2).colspan = 2;
+          // end-code
+          grid._grid.refresh();
+        });
       </code>
 
     </code-example>
@@ -101,7 +137,7 @@
     <h3>Cell content</h3>
     <p>Typically header/footer cells contain plain text but also HTML or even custom
       elements may be wrapped in the cells.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo>
         <table>
           <colgroup>
@@ -117,7 +153,23 @@
           </thead>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
+      </code>
+      <code demo-var="grid">
+        var grid = grid || document.querySelector("v-grid");
+
         var filterElement = document.createElement("input");
         filterElement.setAttribute("type", "search");
         filterElement.setAttribute("placeholder", "Filter...");
@@ -132,16 +184,18 @@
         filterElement.addEventListener("keyup", filter);
         filterElement.addEventListener("click", filter);
 
-        grid.data.source = function(req) {
-          var filterValue = filterElement.value.toLowerCase();
-          var data = myBigData.filter(function(val){ return (val.toString().toLowerCase()).indexOf(filterValue) > -1 } );
-          var slice = data.slice(req.index, req.index + req.count);
-          req.success(slice, data.length == 0 ? 1 : data.length);
-        };
-
-      </code>
-      <code demo-var="grid">
-        grid.header.getCell(1, 0).content = filterElement;
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = function(req) {
+            var filterValue = filterElement.value.toLowerCase();
+            var data = employees.filter(function(val){ return (val.toString().toLowerCase()).indexOf(filterValue) != -1 } );
+            var slice = data.slice(req.index, req.index + req.count);
+            req.success(slice, data.length == 0 ? 1 : data.length);
+          };
+          // code
+          grid.header.getCell(1, 0).content = filterElement;
+          // end-code
+          grid._grid.refresh();
+        });
       </code>
     </code-example>
   </section>
@@ -151,7 +205,7 @@
     <p>Class names for header/footer rows and cells can be assigned with either the
       <code>class</code> attribute in the lightDom API or <code>header.setRowClassName</code>
       and <code>cell.className</code> in the JavaScript API.</p>
-    <code-example>
+    <code-example source>
       <v-grid rows=3 demo>
         <table>
           <colgroup>
@@ -164,14 +218,31 @@
           </thead>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        // Set a datasource for the Grid
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
       <code demo-var="grid">
-        // Set the class names using JavaScript API
-        grid.header.setRowClassName(0, "firstrow");
-        grid.header.getCell(0, 1).className = "lastcell";
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Set the class names using JavaScript API
+          grid.header.setRowClassName(0, "firstrow");
+          grid.header.getCell(0, 1).className = "lastcell";
+          // end-code
+        });
       </code>
     </code-example>
   </section>
@@ -180,7 +251,7 @@
     <h3>Default row</h3>
     <p>Default row in the grid header is the row that contains sort-indicators if sorting
     rules are applied and the "select all" chechbox on multi-select mode.</p>
-    <code-example>
+    <code-example source>
       <v-grid rows=3 selection-mode="multi" demo>
         <table>
           <colgroup>
@@ -196,13 +267,30 @@
           </thead>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        // Set a datasource for the Grid
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
       <code demo-var="grid">
-        // Set the default row using JavaScript API
-        grid.header.defaultRow = 1;
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Set the default row using JavaScript API
+          grid.header.defaultRow = 1;
+          // end-code
+        });
       </code>
     </code-example>
   </section>

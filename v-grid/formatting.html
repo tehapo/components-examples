@@ -21,7 +21,7 @@
   <section>
     <h3>Inline Formatted Data</h3>
     <p>Any regular HTML can be placed inside the grid cells with the DOM api.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo>
         <table>
           <colgroup>
@@ -49,7 +49,7 @@
   <section>
     <h3>Defining Data Renderers</h3>
     <p>Column data can be presented in any format using a renderer function.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo>
         <table>
           <colgroup>
@@ -68,18 +68,25 @@
         </table>
       </v-grid>
       <code demo-var="grid">
-        var currencyRenderer = function(cell) {
-          cell.element.innerHTML = '$' + cell.data;
-        };
+        var grid = grid || document.querySelector("v-grid");
 
-        var progressRenderer = function(cell) {
-          cell.element.innerHTML = '';
-          var child = document.createElement('progress');
-          child.setAttribute('value', cell.data);
-          cell.element.appendChild(child);
-        };
-        grid.columns[1].renderer = currencyRenderer;
-        grid.columns[2].renderer = progressRenderer;
+        window.addEventListener("WebComponentsReady", function() {
+          // code
+          var currencyRenderer = function(cell) {
+            cell.element.innerHTML = '$' + cell.data;
+          };
+
+          var progressRenderer = function(cell) {
+            cell.element.innerHTML = '';
+            var child = document.createElement('progress');
+            child.setAttribute('value', cell.data);
+            cell.element.appendChild(child);
+          };
+
+          grid.columns[1].renderer = currencyRenderer;
+          grid.columns[2].renderer = progressRenderer;
+          // end-code
+        });
       </code>
     </code-example>
   </section>
@@ -89,7 +96,7 @@
     <p>ValueGenerator functions may be assigned to columns to occupy their cells with custom values
     instead of the ones defined by the datasource directly. This also allows creating additional
     columns with any generated content data.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo hidden>
         <table>
           <colgroup>
@@ -99,18 +106,37 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
       <code demo-var="grid">
-        grid.columns[1].valueGenerator = function(data) {
-          return data[2] + " the " + data[3];
-        };
-        grid.columns[2].valueGenerator = function(data) {
-          // Because we're generating random numbers here,
-          // the value changes every time it's scrolled out of viewport.
-          return Math.random(1).toFixed(2);
-        };
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+
+          grid.columns[1].valueGenerator = function(data) {
+            return data[2] + " the " + data[3];
+          };
+          grid.columns[2].valueGenerator = function(data) {
+            // Because we're generating random numbers here,
+            // the value changes every time it's scrolled out of viewport.
+            return Math.random(1).toFixed(2);
+          };
+          // end-code
+        });
       </code>
 
     </code-example>

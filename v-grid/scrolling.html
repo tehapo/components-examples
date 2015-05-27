@@ -27,7 +27,7 @@
       <li><code>scrollToRow(index)</code> allows scrolling to a specific row index.</li>
     </ul>
     </p>
-    <code-example>
+    <code-example source>
       <v-grid rows=5 demo hidden>
         <table>
           <colgroup>
@@ -37,19 +37,39 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
+
       <code demo-var="grid">
-        // Some functionality requires all the previous processes
-        // to be finished before executing. Scrolling to a row
-        // naturally needs rows to exist so we'll wrap the
-        // actual call inside a function and pass it to Grid as a "then"
-        // callback so it's executed only after everything
-        // else is finished.
-        grid.then(function() {
-          // Scroll to a specific row.
-          grid.scrollToRow(70);
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Some functionality requires all the previous processes
+          // to be finished before executing. Scrolling to a row
+          // naturally needs rows to exist so we'll wrap the
+          // actual call inside a function and pass it to Grid as a "then"
+          // callback so it's executed only after everything
+          // else is finished.
+          grid.then(function() {
+            // Scroll to a specific row.
+            grid.scrollToRow(70);
+          });
+          // end-code
+          grid._grid.refresh();
         });
       </code>
     </code-example>

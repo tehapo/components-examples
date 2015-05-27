@@ -27,7 +27,7 @@
          grid, using <code>tbody</code>, in order to render something.</p>
     <p>Read the <a href="#">column API documentation</a> to see all the
        attributes and properties you can define for a column.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo>
         <table>
           <colgroup>
@@ -43,10 +43,17 @@
         </table>
       </v-grid>
       <code demo-var="grid">
-        grid.columns = [
-          { headerContent: "First column" },
-          { headerContent: "Second column" }
-        ];
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          // code
+          grid.columns = [
+            { headerContent: "First column" },
+            { headerContent: "Second column" }
+          ];
+          // end-code
+          grid._grid.refresh();
+        });
       </code>
     </code-example>
   </section>
@@ -56,15 +63,20 @@
     <p>Columns can be added dynamically using the JavaScript API. You can also
        modify the lightDom of the component, but it is not the recommended
        way.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo hidden></v-grid>
-      <code demo-var="grid" hidden>
-        grid.data.source = [["One", "Two"]];
-      </code>
+
       <code demo-var="grid">
-        grid.addColumn({ headerContent: "Column one" });
-        // Specify the index or name of the column before which to add the new column
-        grid.addColumn({ headerContent: "I’m First"}, 0);
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = [["One", "Two"]];
+          // code
+          grid.addColumn({ headerContent: "Column one" });
+          // Specify the index or name of the column before which to add the new column
+          grid.addColumn({ headerContent: "I’m First"}, 0);
+          // end-code
+        });
       </code>
     </code-example>
   </section>
@@ -75,7 +87,7 @@
     <code>column.flex</code> property can be used to adjust how much a column spans
     in width in relation to other columns.</p>
     <p>Columns may also be assigend an explicit width, a maximum width and a minimum width.</p>
-    <code-example>
+    <code-example source>
       <v-grid demo>
         <table>
           <colgroup>
@@ -85,18 +97,36 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        grid.data.source = myBigData;
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
       <code demo-var="grid">
-        // Setting the width properties with JS api
-        grid.columns[0].width = 100;
-        grid.columns[1].maxWidth = 200;
-        grid.columns[2].minWidth = 100;
-        // Setting the flex properties with JS api
-        grid.columns[0].flex = 1;
-        grid.columns[1].flex = 2;
-        grid.columns[2].flex = 1;
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+          // code
+          // Setting the width properties with JS api
+          grid.columns[0].width = 100;
+          grid.columns[1].maxWidth = 200;
+          grid.columns[2].minWidth = 100;
+          // Setting the flex properties with JS api
+          grid.columns[0].flex = 1;
+          grid.columns[1].flex = 2;
+          grid.columns[2].flex = 1;
+          // end-code
+        });
       </code>
     </code-example>
   </section>
@@ -107,7 +137,7 @@
     horizontally still while rest of the columns scroll normally. On multi-select mode the selection column
     containing the checkboxes is frozen by default but setting <code>grid.frozenColumns</code> to
     -1 will unfreeze it as well.</p>
-    <code-example>
+    <code-example source>
       <v-grid selection-mode="multi" frozen-columns="1" demo>
         <table>
           <colgroup>
@@ -119,15 +149,34 @@
           </colgroup>
         </table>
       </v-grid>
-      <code demo-var="grid" hidden>
-        grid.data.source = myBigData;
-        grid.columns[4].valueGenerator = function(data) {
-          return Math.random(1).toFixed(2);
-        };
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        var activities = ["Design","Implement","Polish","Deliver"];
+        var targets = ["soup","Vaadin","dog","world peace"];
+        for (var i = 0; i < 400; i++){
+            var row = [];
+            [names, surnames, activities, targets].forEach(function(array){
+              row.push(array[Math.floor(Math.random()*array.length)]);
+            });
+            employees.push(row);
+        }
       </code>
       <code demo-var="grid">
-        // Alternatively set the frozen columns in JS
-        grid.frozenColumns = 1;
+        var grid = grid || document.querySelector("v-grid");
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+
+          grid.columns[4].valueGenerator = function(data) {
+            return Math.random(1).toFixed(2);
+          };
+          // code
+          // Alternatively set the frozen columns in JS
+          grid.frozenColumns = 1;
+          // end-code
+        });
       </code>
     </code-example>
   </section>
