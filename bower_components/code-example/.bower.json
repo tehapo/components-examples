@@ -1,6 +1,6 @@
 {
   "name": "code-example",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "homepage": "https://github.com/jounik/code-example",
   "authors": [
     "Jouni Koivuviita <jouni@jouni.me>"
@@ -24,13 +24,13 @@
     "polymer": "Polymer/polymer#~v0.9.2",
     "zeroclipboard": "zeroclipboard/zeroclipboard#~2.2.0"
   },
-  "_release": "0.0.10",
+  "_release": "0.0.11",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.10",
-    "commit": "09d4c53c8e09e3e3e6f27c88cffc0e3bfa846947"
+    "tag": "0.0.11",
+    "commit": "6bc6a1c561e4ecec911ec9e086bb7c2f8fccbd39"
   },
   "_source": "git://github.com/jounik/code-example.git",
-  "_target": "~0.0.10",
+  "_target": "~0.0.11",
   "_originalSource": "code-example"
 }
