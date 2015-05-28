@@ -9,14 +9,20 @@ View the [live site](http://vaadin.github.io/components-examples/) to see the co
 
 ### Setting up the project for the first time
 
-- Clone the project:
+Skip this step if you already have this stuff locally.
+
+- Either clone the project:
 ```shell
 $ git clone https://github.com/vaadin/components-examples.git
-$ cd components-examples
 ```
+- Or [download ZIP archive](https://github.com/vaadin/components-examples/archive/gh-pages.zip) and unzip it
 
 ### Serving the examples
 
+- Go to the examples directory
+```shell
+$ cd components-examples
+```
 - Spin up a web server, for example [serve](https://www.npmjs.com/package/serve).
 ```shell
 $ serve
