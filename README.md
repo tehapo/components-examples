@@ -27,4 +27,4 @@ $ cd components-examples
 ```shell
 $ serve
 ```
-- Access the examples through `http://localhost:3000/`
+- Access the examples through `http://localhost:3000/` or directly `http://localhost:3000/v-grid`
