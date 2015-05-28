@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>v-grid Code Examples - Polymer Integration</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../demo.css">
+
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="common.html">
+
+  <script src="https://github.jspm.io/jmcriffey/bower-traceur-runtime@0.0.87/traceur-runtime.js"></script>
+  <script src="https://jspm.io/system@0.16.js"></script>
+  <script src="https://code.angularjs.org/2.0.0-alpha.23/angular2.dev.js"></script>
+</head>
+
+<body>
+  <section>
+    <h1><a href="./">v-grid</a>
+      <span>Polymer Integration</span>
+    </h1>
+    <table-of-contents select="h3" class="toc"></table-of-contents>
+  </section>
+
+
+
+  <section>
+    <h3 id="headers">Angular2 Integration</h3>
+    <p></p>
+    <code-example>
+      <div demo>
+        <!-- Template file: angular-grid.html -->
+        <v-grid *if="true" (select)="select($event)">
+          <table>
+            <colgroup>
+              <col header-text="#" width="52">
+              <col width=54>
+              <col header-text="First name">
+              <col header-text="Last name">
+              <col header-text="Email">
+            </colgroup>
+            <tbody>
+              <tr *for="var user of users">
+                <td>{{user.index}}</td>
+                <td><img src="{{user.picture.thumbnail}}" style="width: 24px"/></td>
+                <td>{{user.name.first}}</td>
+                <td>{{user.name.last}}</td>
+                <td>{{user.email}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </v-grid>
+
+        <div *if="selected" class="user-image">
+          <img src="{{selected.picture.large}}">
+        </div>
+      </div>
+
+      <code>
+        /*
+        // code
+        // Component file: angular-grid.ts
+        import {bootstrap, Component, View, For, If} from 'angular2/angular2';
+
+        @Component({
+          selector: 'angular-grid'
+        })
+        @View({
+          templateUrl: 'angular-grid.html',
+          directives: [For, If]
+        })
+        export class AngularGrid {
+          users;
+          selected;
+
+          constructor() {
+            this.users = [];
+            var _this = this;
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState == XMLHttpRequest.DONE ) {
+                if(xhr.status == 200){
+                  var json = JSON.parse(xhr.responseText);
+                  _this.users = json.results.map((o, i) => {o.user.index = i; return o.user});
+                }
+              }
+            }
+
+            xhr.open("GET", "http://api.randomuser.me/?results=25", true);
+            xhr.send();
+          }
+
+          select(event) {
+            var grid = event.srcElement;
+            this.selected = this.users[grid.selection.selected()[0]];
+          }
+        }
+
+        bootstrap(AngularGrid);
+
+        // end-code
+        */
+      </code>
+
+      <code hidden>
+        var ag = document.createElement("angular-grid");
+        demo.style.display = "none";
+        demo.parentElement.appendChild(ag);
+        System.import('angular-grid');
+      </code>
+    </code-example>
+  </section>
+
+</body>
+</html>

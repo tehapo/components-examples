@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../demo.css">
-  <script src="https://cdn.vaadin.com/vaadin-components/0.2-snapshot/webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="common.html">
 </head>
 
@@ -48,8 +48,8 @@
               </table>
             </v-grid>
             <template is="dom-if" if="{{selected}}">
-              <div style="width: 240px; height: 240px; margin:15px 0 0 65px;border-radius:5px;border: 3px solid rgb(232,232,232);">
-                <img src="{{selected.user.picture.large}}" style="width: 240px"/>
+              <div class="user-image">
+                <img src="{{selected.user.picture.large}}" />
               </div>
             </template>
           </template>

@@ -1,0 +1,24 @@
+<v-grid *if="true" (select)="select($event)">
+  <table>
+    <colgroup>
+      <col header-text="#" width="52">
+      <col width=54>
+      <col header-text="First name">
+      <col header-text="Last name">
+      <col header-text="Email">
+    </colgroup>
+    <tbody>
+      <tr *for="var user of users">
+        <td>{{user.index}}</td>
+        <td><img src="{{user.picture.thumbnail}}" style="width: 24px"/></td>
+        <td>{{user.name.first}}</td>
+        <td>{{user.name.last}}</td>
+        <td>{{user.email}}</td>
+      </tr>
+    </tbody>
+  </table>
+</v-grid>
+
+<div *if="selected" class="user-image">
+  <img src="{{selected.picture.large}}">
+</div>
