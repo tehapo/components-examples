@@ -27,15 +27,21 @@
           <template>
             <v-grid>
               <table>
-                <col header-text="Name">
-                <col header-text="Value">
-                <col header-text="Progress">
+                <col header-text="#" width="52">
+                <col width="54">
+                <col header-text="First Name">
+                <col header-text="Last Name">
+                <col header-text="Email">
                 <tbody>
-                <template is="dom-repeat" items="{{mydata}}">
+                <template is="dom-repeat" items="{{users}}">
                   <tr>
-                    <td>{{item.name}}</td>
-                    <td>{{item.value}}</td>
-                    <td>{{item.progress}}</td>
+                    <td>{{index}}</td>
+                    <td>
+                      <img src="{{item.user.picture.thumbnail}}" style="width: 24px"/>
+                    </td>
+                    <td>{{item.user.name.first}}</td>
+                    <td>{{item.user.name.last}}</td>
+                    <td>{{item.user.email}}</td>
                   </tr>
                 </template>
                 </tbody>
@@ -51,10 +57,19 @@
           Polymer({
             is: 'my-grid-with-template',
             ready: function() {
-              this.mydata = [
-                {"name": "Project A", "value": "10000", "progress": 0.8},
-                {"name": "Project B", "value": "999999", "progress": 0.8}
-              ];
+              var _this = this;
+
+              var xhr = new XMLHttpRequest();
+              xhr.onreadystatechange = function() {
+
+                if (xhr.readyState == XMLHttpRequest.DONE ) {
+                  if(xhr.status == 200){
+                    _this.users = JSON.parse(xhr.responseText).results;
+                  }
+                }
+              }
+              xhr.open("GET", "http://api.randomuser.me/?results=25", true);
+              xhr.send();
             }
           });
           // end-code
