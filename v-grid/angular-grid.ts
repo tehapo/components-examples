@@ -1,11 +1,11 @@
-import {bootstrap, Component, View, For, If} from 'angular2/angular2';
+import {bootstrap, Component, View, NgFor, NgIf} from 'angular2/angular2';
 
 @Component({
   selector: 'angular-grid'
 })
 @View({
   templateUrl: 'angular-grid.html',
-  directives: [For, If]
+  directives: [NgFor, NgIf]
 })
 export class AngularGrid {
   users;
@@ -29,7 +29,7 @@ export class AngularGrid {
   }
 
   select(event) {
-    var grid = event.srcElement;
+    var grid = event.target;
     this.selected = this.users[grid.selection.selected()[0]];
   }
 }

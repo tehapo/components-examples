@@ -7,12 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../demo.css">
 
-  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
   <link rel="import" href="common.html">
 
-  <script src="https://github.jspm.io/jmcriffey/bower-traceur-runtime@0.0.87/traceur-runtime.js"></script>
+  <script src="https://github.jspm.io/jmcriffey/bower-traceur-runtime@0.0.89/traceur-runtime.js"></script>
   <script src="https://jspm.io/system@0.16.js"></script>
-  <script src="https://code.angularjs.org/2.0.0-alpha.23/angular2.dev.js"></script>
+  <script src="https://code.angularjs.org/2.0.0-alpha.25/angular2.dev.js"></script>
+
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 </head>
 
 <body>
@@ -30,8 +32,7 @@
     <p></p>
     <code-example>
       <div demo>
-        <!-- Template file: angular-grid.html -->
-        <v-grid *if="true" (select)="select($event)">
+        <v-grid (select)="select($event)">
           <table>
             <colgroup>
               <col header-text="#" width="52">
@@ -41,7 +42,7 @@
               <col header-text="Email">
             </colgroup>
             <tbody>
-              <tr *for="var user of users">
+              <tr *ng-for="var user of users">
                 <td>{{user.index}}</td>
                 <td><img src="{{user.picture.thumbnail}}" style="width: 24px"/></td>
                 <td>{{user.name.first}}</td>
@@ -52,23 +53,24 @@
           </table>
         </v-grid>
 
-        <div *if="selected" class="user-image">
+        <div *ng-if="selected" class="user-image">
           <img src="{{selected.picture.large}}">
         </div>
+
       </div>
 
       <code>
         /*
         // code
         // Component file: angular-grid.ts
-        import {bootstrap, Component, View, For, If} from 'angular2/angular2';
+        import {bootstrap, Component, View, NgFor, NgIf} from 'angular2/angular2';
 
         @Component({
           selector: 'angular-grid'
         })
         @View({
           templateUrl: 'angular-grid.html',
-          directives: [For, If]
+          directives: [NgFor, NgIf]
         })
         export class AngularGrid {
           users;
@@ -76,13 +78,13 @@
 
           constructor() {
             this.users = [];
-            var _this = this;
-            var xhr = new XMLHttpRequest();
+            const _this = this;
+            const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
               if (xhr.readyState == XMLHttpRequest.DONE ) {
                 if(xhr.status == 200){
-                  var json = JSON.parse(xhr.responseText);
-                  _this.users = json.results.map((o, i) => {o.user.index = i; return o.user});
+                  var results = JSON.parse(xhr.responseText).results;
+                  _this.users = results.map((o, i) => {o.user.index = i; return o.user});
                 }
               }
             }
@@ -92,7 +94,7 @@
           }
 
           select(event) {
-            var grid = event.srcElement;
+            var grid = event.target;
             this.selected = this.users[grid.selection.selected()[0]];
           }
         }

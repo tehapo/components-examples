@@ -1,4 +1,4 @@
-<v-grid *if="true" (select)="select($event)">
+<v-grid (select)="select($event)">
   <table>
     <colgroup>
       <col header-text="#" width="52">
@@ -8,7 +8,7 @@
       <col header-text="Email">
     </colgroup>
     <tbody>
-      <tr *for="var user of users">
+      <tr *ng-for="var user of users">
         <td>{{user.index}}</td>
         <td><img src="{{user.picture.thumbnail}}" style="width: 24px"/></td>
         <td>{{user.name.first}}</td>
@@ -19,6 +19,6 @@
   </table>
 </v-grid>
 
-<div *if="selected" class="user-image">
+<div *ng-if="selected" class="user-image">
   <img src="{{selected.picture.large}}">
 </div>

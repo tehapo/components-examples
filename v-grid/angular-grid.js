@@ -24,7 +24,7 @@ var AngularGrid = (function () {
         xhr.send();
     }
     AngularGrid.prototype.select = function (event) {
-        var grid = event.srcElement;
+        var grid = event.target;
         this.selected = this.users[grid.selection.selected()[0]];
     };
     AngularGrid = __decorate([
@@ -33,7 +33,7 @@ var AngularGrid = (function () {
         }),
         angular2_1.View({
             templateUrl: 'angular-grid.html',
-            directives: [angular2_1.For, angular2_1.If]
+            directives: [angular2_1.NgFor, angular2_1.NgIf]
         })
     ], AngularGrid);
     return AngularGrid;
