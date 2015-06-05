@@ -1,6 +1,6 @@
 {
   "name": "vaadin-components",
-  "version": "0.3.0-beta1",
+  "version": "0.3.0-beta2",
   "authors": [
     "Vaadin Ltd"
   ],
@@ -17,16 +17,16 @@
     "**/tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#v0.9.0"
+    "polymer": "Polymer/polymer#v1.0.2"
   },
   "homepage": "https://github.com/vaadin-bower/vaadin-components",
-  "_release": "0.3.0-beta1",
+  "_release": "0.3.0-beta2",
   "_resolution": {
     "type": "version",
-    "tag": "0.3.0-beta1",
-    "commit": "39a52643426ed3be3fd80b690f5df81d3886afce"
+    "tag": "0.3.0-beta2",
+    "commit": "237462eae4dec1f7428748d8e2b7231950d6b6a5"
   },
   "_source": "git://github.com/vaadin-bower/vaadin-components.git",
-  "_target": "0.3.0-beta1",
+  "_target": "0.3.0-beta2",
   "_originalSource": "vaadin-components"
 }
