@@ -12,27 +12,13 @@
 
   <script src="https://github.jspm.io/jmcriffey/bower-traceur-runtime@0.0.90/traceur-runtime.js"></script>
   <script src="https://jspm.io/system@0.16.js"></script>
+  <script src="https://code.angularjs.org/2.0.0-alpha.27/angular2.dev.js"></script>
 
-  <script>
-    window.addEventListener("WebComponentsReady",function() {
-
-      // Add angular 2 import after web components have registered
-      // (angular also shims document.registerElement)
-      var fileref = document.createElement("script");
-      fileref.setAttribute("src", "https://code.angularjs.org/2.0.0-alpha.26/angular2.dev.js");
-      document.getElementsByTagName("head")[0].appendChild(fileref);
-
-      var demo = document.querySelector("div[demo]");
-      demo.style.display = "none";
-
-      fileref.addEventListener('load', function() {
-        var ag = document.createElement("angular-grid");
-        demo.parentElement.appendChild(ag);
-        System.import('angular-grid');
-      });
-
-    });
-  </script>
+  <style type="text/css">
+    div[demo] {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -78,6 +64,11 @@
       </div>
 
       <code>
+
+        var ag = document.createElement("angular-grid");
+        demo.parentElement.appendChild(ag);
+        System.import('angular-grid');
+
         /*
         // code
         // Component file: angular-grid.ts
