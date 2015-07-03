@@ -22,14 +22,11 @@ export class AngularGrid {
         .subscribe(results => req.success(results, this.gender.value ? 50 : 100));
 
     // Set a renderer for the picture column
-    this.grid.columns[1].renderer = cell =>
+    this.grid.columns[0].renderer = cell =>
       cell.element.innerHTML = "<img style='width: 30px' src='" + cell.data + "' />";
 
     // Add a new header row with the gender select in it
-    this.grid.then(() => {
-      this.grid.header.addRow(1, [this.gender]);
-      this.grid.header.getCell(1, 1).colspan = 4;
-    });
+    this.grid.then(() => this.grid.header.addRow(1, ["", this.gender]));
   }
 
   getUrl(gender: string, results: number) : string {
@@ -39,7 +36,7 @@ export class AngularGrid {
   onSelect() {
     this.selected = undefined;
     const selectedIndex = this.grid.selection.selected()[0];
-    this.grid.data.getItem(selectedIndex, (data) => this.selected = data);
+    this.grid.data.getItem(selectedIndex, (err, data) => this.selected = data);
   }
 }
 

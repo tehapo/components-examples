@@ -21,13 +21,10 @@ var AngularGrid = (function () {
                 .map(function (res) { return res.json().results; })
                 .subscribe(function (results) { return req.success(results, _this.gender.value ? 50 : 100); });
         };
-        this.grid.columns[1].renderer = function (cell) {
+        this.grid.columns[0].renderer = function (cell) {
             return cell.element.innerHTML = "<img style='width: 30px' src='" + cell.data + "' />";
         };
-        this.grid.then(function () {
-            _this.grid.header.addRow(1, [_this.gender]);
-            _this.grid.header.getCell(1, 1).colspan = 4;
-        });
+        this.grid.then(function () { return _this.grid.header.addRow(1, ["", _this.gender]); });
     }
     AngularGrid.prototype.getUrl = function (gender, results) {
         return 'http://api.randomuser.me?nat=us&gender=' + gender + '&results=' + results;
@@ -36,7 +33,7 @@ var AngularGrid = (function () {
         var _this = this;
         this.selected = undefined;
         var selectedIndex = this.grid.selection.selected()[0];
-        this.grid.data.getItem(selectedIndex, function (data) { return _this.selected = data; });
+        this.grid.data.getItem(selectedIndex, function (err, data) { return _this.selected = data; });
     };
     AngularGrid = __decorate([
         angular2_1.Component({
