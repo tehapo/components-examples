@@ -3,12 +3,14 @@
 
 ### `<v-grid>`
 - Vaadin Widgets updated to 7.5.0.beta1.
+- Theme revised to comply better with Material Design guidelines.
 - Improved Grid resizing logic.
 - Drag selection is now disabled.
 - Row editor is now disabled.
 - `Value Generator` is now removed because of feature overlaps with `Renderer` (#12)
 - Spinner added to visualize data loading. (#14)
 - Improved scrolling on touch devices. (#18)
+- JSDocs revised.
 - Issues fixed:
   - Grid doesn't work when using selection-mode multi, frozen columns and sortable columns. (#7)
   - Grid height is recalculated incorrectly when sorting a grid with a fixed height. (#8)
@@ -24,6 +26,11 @@
   - "Scrollbar not visible on OS X Safari" (#28)
   - "Chrome OS X hides scrollbars even if System Preferences has 'Show scrollbars always' on" (#30)
   - "Failed to execute write on Document" (#16)
+  - "Select all checkbox does not reset" (#35)
+  - "<v-grid> text-overflow: ellipsis; doesn’t work for cell content" (#10)
+  - "Wrong checkbox style state" (#32)
+  - "Horizontal scrollbar is hidden when scrolling vertically (OS X Chrome)" (#29)
+  - "Clicking an indeterminate select all -checkbox should select everything on "multi" mode" (#42)
 
 ***
 

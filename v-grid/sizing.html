@@ -181,50 +181,5 @@
       </code>
     </code-example>
   </section>
-
-  <section>
-    <h3>Chessboard</h3>
-    <p>Simple chessboard styled with the help of a <code>cellClassGenerator</code>
-      which takes row indexes and column indexes into account.</p>
-    <code-example source>
-      <v-grid rows=8 demo hidden class="chessboard">
-        <table>
-          <colgroup>
-            <col header-text="a" width="32">
-            <col header-text="b" width="32">
-            <col header-text="c" width="32">
-            <col header-text="d" width="32">
-            <col header-text="e" width="32">
-            <col header-text="f" width="32">
-            <col header-text="g" width="32">
-            <col header-text="h" width="32">
-          </colgroup>
-        </table>
-      </v-grid>
-      <code demo-var="grid">
-        var grid = grid || document.querySelector("v-grid");
-
-        window.addEventListener("WebComponentsReady", function() {
-          // code
-          grid.data.source = [
-            ['&#9820;','&#9822;','&#9821;','&#9819;','&#9818;','&#9821;','&#9822;','&#9820;'],
-            ['&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;'],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;','&#9823;'],
-            ['&#9820;','&#9822;','&#9821;','&#9819;','&#9818;','&#9821;','&#9822;','&#9820;']
-          ];
-          grid.cellClassGenerator = function(cell) {
-            var white = (cell.row.index - cell.index) % 2 == 0;
-            return white ? 'white' : 'black';
-          };
-          // end-code
-        });
-      </code>
-    </code-example>
-  </section>
-
 </body>
 </html>

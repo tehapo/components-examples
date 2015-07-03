@@ -1,14 +1,15 @@
 {
   "name": "vaadin-components",
-  "version": "0.3.0-beta3",
+  "version": "0.3.0-beta4",
   "authors": [
     "Vaadin Ltd"
   ],
-  "description": "Vaadin Grid web component",
+  "description": "Vaadin Components is an evolving set of custom HTML elements, built using Polymer, for building mobile and desktop web applications in modern browsers.",
   "license": "Apache License 2.0",
   "keywords": [
     "web-components"
   ],
+  "main": "vaadin-components.html",
   "ignore": [
     "**/.*",
     "**/node_modules",
@@ -20,13 +21,13 @@
     "polymer": "Polymer/polymer#v1.0.2"
   },
   "homepage": "https://github.com/vaadin-bower/vaadin-components",
-  "_release": "0.3.0-beta3",
+  "_release": "0.3.0-beta4",
   "_resolution": {
     "type": "version",
-    "tag": "0.3.0-beta3",
-    "commit": "9598ff524cc24b596d391ca31212aa09d68fbfac"
+    "tag": "0.3.0-beta4",
+    "commit": "1ce74c5658b23362ae6fb3519a0c1bc4ae536b80"
   },
   "_source": "git://github.com/vaadin-bower/vaadin-components.git",
-  "_target": "0.3.0-beta3",
+  "_target": "0.3.0-beta4",
   "_originalSource": "vaadin-components"
 }
