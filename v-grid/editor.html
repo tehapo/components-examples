@@ -13,19 +13,19 @@
 <body>
   <section>
     <h1><a href="./">v-grid</a>
-      <span>Grid Editor</span>
+      <span><code>v-grid</code> Editor</span>
     </h1>
     <table-of-contents select="h3" class="toc"></table-of-contents>
   </section>
 
   <section>
     <h3>Default Editor</h3>
-    <p>With the editor feature of the Grid, it is easy to offer the end-user the possibility
-      to edit individual items/rows of data in the Grid. The editor can be activated by the
+    <p>With the editor feature of <code>v-grid</code>, it is easy to offer the end-user the possibility
+      to edit individual items/rows of data in <code>v-grid</code>. The editor can be activated by the
       end-user either by double-clicking a row or by focusing a row and pressing the Enter key.
       <code>editable</code> and <code>editor.enabled</code> properties are used to enable the
       editor feature.</p>
-    <p>Grid has a built-in default editor implementation which uses simple HTML text input elements
+    <p><code>v-grid</code> has a built-in default editor implementation which uses simple HTML text input elements
       for editing the values. <code>editor.save</code> function is not defined by default,
       so clicking the "save" button only closes the default editor.
     </p>
@@ -52,7 +52,7 @@
 
   <section>
     <h3>Custom Editor Handler</h3>
-    <p>To provide custom editor fields for Grid cells or to actually persist the modified data
+    <p>To provide custom editor fields for <code>v-grid</code> cells or to actually persist the modified data
     to data source after clicking save a custom <code>editor.handler</code> should be implemented.
     It consists of four callback functions:
       <ul>

@@ -20,7 +20,7 @@
 
   <section>
     <h3>Sortable columns</h3>
-    <p>Clicking a grid header cell updates the Grid sort order indicators assuming the column is marked sortable.
+    <p>Clicking a grid header cell updates <code>v-grid</code> sort order indicators assuming the column is marked sortable.
     Doing so also updates the <code>data.sortOrder</code> property behind the scenes. The property may also
     be set programmatically or even declaratively by pre-defining <code>sort-direction</code> attributes for columns.</p>
     <code-example source>
@@ -58,8 +58,8 @@
 
   <section>
     <h3>Sorting the Data Source</h3>
-    <p>As mentioned in the previous example, there's multiple ways to change the Grid sort order.
-    None of them will however automatically order any data inside the Grid. The data source implementation
+    <p>As mentioned in the previous example, there's multiple ways to change <code>v-grid</code> sort order.
+    None of them will however automatically order any data inside <code>v-grid</code>. The data source implementation
     is always responsible of providing appropriate data that's ordered by the sort-order definitions.</p>
     <code-example source>
       <v-grid demo>

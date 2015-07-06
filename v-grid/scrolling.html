@@ -19,24 +19,29 @@
   </section>
 
   <section>
-    <h3>Scrolling the Grid</h3>
-    <p>JS API provides functions for scrolling the Grid programmatically.
+    <h3>Scrolling <code>v-grid</code></h3>
+    <p>JS API provides functions for scrolling <code>v-grid</code> programmatically.
     <ul>
       <li><code>scrollToStart()</code> restores the scroll position back to the beginning.</li>
-      <li><code>scrollToEnd()</code> scrolls the Grid all the way to the last data row.</li>
-      <li><code>scrollToRow(index)</code> allows scrolling to a specific row index.</li>
+      <li><code>scrollToEnd()</code> scrolls <code>v-grid</code> all the way to the last data row.</li>
+      <li><code>scrollToRow(index [, destination])</code> allows scrolling to a specific row index. The optional <code>destination</code> parameter accepts the values <code>"start"</code> and <code>"end"</code>.</li>
     </ul>
     </p>
     <code-example source>
       <v-grid demo hidden>
         <table>
           <colgroup>
+            <col header-text="#">
             <col header-text="Name">
             <col header-text="Surname">
             <col header-text="Activity">
           </colgroup>
         </table>
       </v-grid>
+      <button id="scrollToStart">scrollToStart</button>
+      <button id="scrollToEnd">scrollToEnd</button>
+      <button id="scrollToRow">scrollToRow(100)</button>
+
       <code hidden>
         var employees = [];
         var names = ["Artur", "Patrik", "Henrik", "Teemu"];
@@ -61,7 +66,7 @@
           // Some functionality requires all the previous processes
           // to be finished before executing. Scrolling to a row
           // naturally needs rows to exist so we'll wrap the
-          // actual call inside a function and pass it to Grid as a "then"
+          // actual call inside a function and pass it to v-grid as a "then"
           // callback so it's executed only after everything
           // else is finished.
           grid.then(function() {
@@ -69,6 +74,22 @@
             grid.scrollToRow(70);
           });
           // end-code
+
+          grid.columns[0].renderer = function(cell) {
+            cell.element.innerHTML = cell.row.index;
+          }
+
+          document.getElementById("scrollToStart").addEventListener("click", function() {
+            grid.scrollToStart();
+          });
+
+          document.getElementById("scrollToEnd").addEventListener("click", function() {
+            grid.scrollToEnd();
+          });
+
+          document.getElementById("scrollToRow").addEventListener("click", function() {
+            grid.scrollToRow(100);
+          });
         });
       </code>
     </code-example>

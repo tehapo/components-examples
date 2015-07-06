@@ -64,14 +64,14 @@
     <h3>Selection modes</h3>
     <p>
       <ul>
-        <li><b>Single</b> is the default selection mode for Grid. It allows only one row to be selected at once.</li>
+        <li><b>Single</b> is the default selection mode for <code>v-grid</code>. It allows only one row to be selected at once.</li>
         <li><b>Multi</b> selection mode reveals an additional checkbox column allowing the user to select multiple rows.</li>
         <li><b>All</b> selection mode has each row selected by default allowing the user to deselect individual rows.</li>
         <li><b>Disabled</b> disables the selection functionality.</li>
       </ul>
     </p>
     <p>
-      You can toggle between <b>multi</b> and <b>all</b> modes by clicking the checkbox on Grid header.
+      You can toggle between <b>multi</b> and <b>all</b> modes by clicking the checkbox in <code>v-grid</code> header.
     </p>
     <code-example source>
       <v-grid demo selection-mode="multi">
@@ -139,7 +139,7 @@
 
   <section>
     <h3>Processing the selections as arrays</h3>
-    <p>You can simply ask the Grid for all the selected row indexes with <code>selection.selected()</code>
+    <p>You can simply ask <code>v-grid</code> for all the selected row indexes with <code>selection.selected()</code>
       function which returns an array of integers for you to process further.</p>
     <p>This works fine on most cases with <i>single</i> and <i>multi</i> selection modes, but if your grid contains tons
       of data and the selection mode is set to <i>all</i>, you're better off with <code>selection.deselected()</code>.</p>
