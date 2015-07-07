@@ -105,7 +105,7 @@ blockquote {
   width: 240px;
 }
 
-.readme table {
+#readme table {
   display: block;
   width: 100%;
   overflow: auto;
@@ -113,13 +113,13 @@ blockquote {
   word-break: keep-all;
 }
 
-.readme table tr {
+#readme table tr {
   background-color: #fff;
   border-top: 1px solid #ccc;
 }
 
-.readme table th,
-.readme table td{
+#readme table th,
+#readme table td{
   padding: 6px 13px;
   border: 1px solid #ddd;
 }
