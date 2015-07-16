@@ -1,24 +1,21 @@
-<v-grid (select)="select($event)">
+<v-grid #grid (select)="onSelect()">
   <table>
     <colgroup>
-      <col header-text="#" width="52">
-      <col width=54>
-      <col header-text="First name">
-      <col header-text="Last name">
-      <col header-text="Email">
+      <col width=80 name="user.picture.thumbnail">
+      <col header-text="Gender" name="user.gender">
+      <col header-text="First name" name="user.name.first">
+      <col header-text="Last name" name="user.name.last">
+      <col header-text="Email" name="user.email">
     </colgroup>
-    <tbody>
-      <tr *ng-for="var user of users">
-        <td>{{user.index}}</td>
-        <td><img src="{{user.picture.thumbnail}}" style="width: 24px"/></td>
-        <td>{{user.name.first}}</td>
-        <td>{{user.name.last}}</td>
-        <td>{{user.email}}</td>
-      </tr>
-    </tbody>
   </table>
 </v-grid>
 
-<div *ng-if="selected" class="user-image">
-  <img src="{{selected.picture.large}}">
+<img *ng-if="selected" class="user-image" src="{{selected.user.picture.large}}">
+
+<div style="display: none">
+  <select maxlength=5 type="select" (change)="grid.data.clearCache(); grid.scrollToStart();">
+    <option value=''></option>
+    <option value='male'>Men only</option>
+    <option value='female'>Women only</option>
+  </select>
 </div>
