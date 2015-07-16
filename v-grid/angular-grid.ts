@@ -1,42 +1,36 @@
-import {Inject, bootstrap, Component, View, NgIf} from 'angular2/angular2';
-import {Http, httpInjectables} from 'angular2/http';
+import {bootstrap, Component, View, NgFor, NgIf} from 'angular2/angular2';
 
 @Component({
-  selector: 'angular-grid',
-  appInjector: [httpInjectables]
+  selector: 'angular-grid'
 })
 @View({
   templateUrl: 'angular-grid.html',
-  directives: [NgIf]
+  directives: [NgFor, NgIf]
 })
 export class AngularGrid {
-  selected: Object;
-  grid = document.querySelector("angular-grid v-grid");
-  gender = document.querySelector("angular-grid select");
+  users;
+  selected;
 
-  constructor(@Inject(Http) http: Http) {
-    // Set a datasource for the v-grid
-    this.grid.data.source = req =>
-      http.get(this.getUrl(this.gender.value, Math.max(req.count, 1)))
-        .map(res => res.json().results)
-        .subscribe(results => req.success(results, this.gender.value ? 50 : 100));
+  constructor() {
+    this.users = [];
+    const _this = this;
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == XMLHttpRequest.DONE ) {
+        if(xhr.status == 200){
+          var results = JSON.parse(xhr.responseText).results;
+          _this.users = results.map((o, i) => {o.user.index = i; return o.user});
+        }
+      }
+    }
 
-    // Set a renderer for the picture column
-    this.grid.columns[0].renderer = cell =>
-      cell.element.innerHTML = "<img style='width: 30px' src='" + cell.data + "' />";
-
-    // Add a new header row with the gender select in it
-    this.grid.then(() => this.grid.header.addRow(1, ["", this.gender]));
+    xhr.open("GET", "http://api.randomuser.me/?results=25", true);
+    xhr.send();
   }
 
-  getUrl(gender: string, results: number) : string {
-    return 'http://api.randomuser.me?nat=us&gender=' + gender + '&results=' + results;
-  }
-
-  onSelect() {
-    this.selected = undefined;
-    const selectedIndex = this.grid.selection.selected()[0];
-    this.grid.data.getItem(selectedIndex, (err, data) => this.selected = data);
+  select(event) {
+    var grid = event.target;
+    this.selected = this.users[grid.selection.selected()[0]];
   }
 }
 
