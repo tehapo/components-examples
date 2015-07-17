@@ -6,35 +6,45 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var angular2_1 = require('angular2/angular2');
+var http_1 = require('angular2/http');
 var AngularGrid = (function () {
-    function AngularGrid() {
-        this.users = [];
+    function AngularGrid(http) {
         var _this = this;
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status == 200) {
-                    var results = JSON.parse(xhr.responseText).results;
-                    _this.users = results.map(function (o, i) { o.user.index = i; return o.user; });
-                }
-            }
+        this.grid = document.querySelector("angular-grid v-grid");
+        this.gender = document.querySelector("angular-grid select");
+        this.grid.data.source = function (req) {
+            return http.get(_this.getUrl(_this.gender.value, Math.max(req.count, 1)))
+                .map(function (res) { return res.json().results; })
+                .subscribe(function (results) { return req.success(results, _this.gender.value ? 50 : 100); });
         };
-        xhr.open("GET", "http://api.randomuser.me/?results=25", true);
-        xhr.send();
+        this.grid.columns[0].renderer = function (cell) {
+            return cell.element.innerHTML = "<img style='width: 30px' src='" + cell.data + "' />";
+        };
+        this.grid.then(function () { return _this.grid.header.addRow(1, ["", _this.gender]); });
     }
-    AngularGrid.prototype.select = function (event) {
-        var grid = event.target;
-        this.selected = this.users[grid.selection.selected()[0]];
+    AngularGrid.prototype.getUrl = function (gender, results) {
+        return 'http://api.randomuser.me?nat=us&gender=' + gender + '&results=' + results;
+    };
+    AngularGrid.prototype.onSelect = function () {
+        var _this = this;
+        this.selected = undefined;
+        var selectedIndex = this.grid.selection.selected()[0];
+        this.grid.data.getItem(selectedIndex, function (err, data) { return _this.selected = data; });
     };
     AngularGrid = __decorate([
         angular2_1.Component({
-            selector: 'angular-grid'
+            selector: 'angular-grid',
+            appInjector: [http_1.httpInjectables]
         }),
         angular2_1.View({
             templateUrl: 'angular-grid.html',
-            directives: [angular2_1.NgFor, angular2_1.NgIf]
-        })
+            directives: [angular2_1.NgIf]
+        }),
+        __param(0, angular2_1.Inject(http_1.Http))
     ], AngularGrid);
     return AngularGrid;
 })();
