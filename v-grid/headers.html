@@ -291,6 +291,66 @@
       </code>
     </code-example>
   </section>
+
+  <section>
+    <h3>Footer with dynamic text content</h3>
+    <p></p>
+    <code-example source>
+      <v-grid demo selection-mode="multi">
+        <table>
+          <colgroup>
+            <col><col><col>
+          </colgroup>
+          <thead>
+          <tr>
+            <th>First Name</th><th>Last Name</th><th>Score</th>
+          </tr>
+          </thead>
+          <tfoot>
+          <tr>
+            <th colspan=2>Number of selected rows: <span id="selected-counter">0</span></th>
+            <th><span id="total-score">total</span></th>
+          </tr>
+          </tfoot>
+        </table>
+      </v-grid>
+      <code hidden>
+        var employees = [];
+        var names = ["Artur", "Patrik", "Henrik", "Teemu"];
+        var surnames = ["Signell","Lehtinen","Ahlroos","Paul"];
+        for (var i = 0; i < 400; i++){
+          var row = [];
+          [names, surnames].forEach(function(array){
+            row.push(array[Math.floor(Math.random()*array.length)]);
+          });
+          row.push(Math.floor(Math.random()*100));
+          employees.push(row);
+        }
+      </code>
+      <code demo-var="grid">
+        var grid = grid || document.querySelector("v-grid");
+
+        function totalScore(employees) {
+          var initialValue = employees[0][2];
+          return employees.reduce(function (prev, curr, index, array) {
+            return prev + curr[2];
+          }, initialValue);
+        }
+
+        window.addEventListener("WebComponentsReady", function() {
+          grid.data.source = employees;
+
+          // code
+          grid.addEventListener("select", function(e) {
+            grid.$$("#selected-counter").textContent = grid.selection.size;
+          });
+
+          grid.$$("#total-score").textContent = totalScore(employees);
+          // end-code
+        });
+      </code>
+    </code-example>
+  </section>
 </body>
 
 </html>
