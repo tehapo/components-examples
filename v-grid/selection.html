@@ -50,7 +50,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           grid.selection.deselect(0);
           grid.selection.select(1);
@@ -126,7 +126,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
           // Set the selection mode to "multi"
@@ -170,7 +170,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
           // Log the selections / deselection to console on select event
@@ -219,7 +219,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
           // Log selected designers list on select event
@@ -272,7 +272,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
           // Log selected indexes in batches of 5

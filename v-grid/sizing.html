@@ -81,7 +81,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
           // Setting the explicit row count in JavaScript
@@ -122,7 +122,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
           grid.rowClassGenerator = function(row) {
@@ -165,7 +165,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
 
