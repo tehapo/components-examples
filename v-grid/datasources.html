@@ -64,7 +64,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           var data = [ [ "Project A", 10000, 0.8 ],
                        [ "Project B", 87654, 0.2 ],
@@ -96,7 +96,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           grid.data.source = [ { projectName: "Project A", cost: {estimate: 10000, current: 8000 } },
                        { projectName: "Project B", cost: {estimate: 20000, current: 11000 } },
@@ -125,7 +125,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           grid.data.source = ["Steel", "Dr. Manhattan", "Batman", "Black Widow", "Rorschach", "Gambit", "Swamp Thing", "Mystique", "Ozymandias", "Bubastis", "Ozymandias", "Magneto", "Goat Faced Girl", "Aqualad", "Mister Fantastic", "Superman", "Iron Monger", "Professor X", "Namor the Sub-Mariner", "Namorita", " Rocket Raccoon", " The Penguin", "Lex Luthor", "Martian Man Hunter", "Pepper Potts", "Fin Fang Foom", "Elongated Man", "Savage Dragon", "Thing", "Thor Odinson", "The Maxx", "Deadpool", "Storm", "Sabertooth", "Jezebel Jet", "Darwin", "Sasquatch", "Abe (Abraham) Sapien", "The Goon", "Ra’s Al Ghul", "Oracle", "Hellboy", " Doctor Doom", " Solomon Grundy", "Ferro Lad"];
           // end-code
@@ -167,7 +167,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           grid.data.source = function(req) {
             setTimeout(function() {
@@ -212,7 +212,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           // Define the datasource
           var data = [ [ "Project A", 10000, 0.8 ],
@@ -250,7 +250,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           var dataSourceSize = 1000;
           grid.data.source = function(req) {

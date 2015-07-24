@@ -42,7 +42,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           // Setting the sort definitions in JavaScript
           grid.columns[0].sortable = true;
@@ -74,7 +74,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           // Set a data source for the grid
           var data = [ [ "Project A", 10000, 0.8 ],

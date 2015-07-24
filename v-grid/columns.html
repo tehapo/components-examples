@@ -43,7 +43,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           /*
           // code
           // Columns can also be configured in JS
@@ -69,7 +69,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = [["One", "Two"]];
           // code
           grid.addColumn({ headerContent: "Column one" });
@@ -114,7 +114,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
           // Setting the width properties with JS api
@@ -166,7 +166,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
 
           grid.columns[4].renderer = function(cell) {

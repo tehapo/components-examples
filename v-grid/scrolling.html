@@ -60,7 +60,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           grid.data.source = employees;
           // code
           // Some functionality requires all the previous processes

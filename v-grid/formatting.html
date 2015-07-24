@@ -70,7 +70,7 @@
       <code demo-var="grid">
         var grid = grid || document.querySelector("v-grid");
 
-        window.addEventListener("WebComponentsReady", function() {
+        HTMLImports.whenReady(function() {
           // code
           var currencyRenderer = function(cell) {
             cell.element.innerHTML = '$' + cell.data;
