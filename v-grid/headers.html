@@ -8,6 +8,19 @@
   <link rel="stylesheet" href="../demo.css">
   <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="common.html">
+  <link rel="stylesheet" href="http://css-spinners.com/css/spinner/spinner.css" type="text/css">
+
+  <style>
+    #page:invalid {
+      border: 1px solid red;
+    }
+    .small.spinner-loader {
+      font-size: 3px;
+    }
+    .hidden.spinner-loader {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -347,6 +360,113 @@
 
           grid.$$("#total-score").textContent = totalScore(employees);
           // end-code
+        });
+      </code>
+    </code-example>
+  </section>
+
+  <section>
+    <h3>Pagination</h3>
+    <p></p>
+    <code-example source>
+      <v-grid demo>
+        <table>
+          <colgroup>
+            <col name="index" header-text="#" width="60">
+            <col name="user.picture.thumbnail" width="100">
+            <col name="user.name.first" header-text="First Name">
+            <col name="user.name.last" header-text="Last Name">
+            <col name="user.email" header-text="Email" flex="">
+          </colgroup>
+          <tfoot>
+          <tr>
+            <th colspan=5>
+              <button id="prev">Prev</button>
+              <input id="page" type="number" min="1" max="10" value="1" required/>
+              /10
+              <button id="next">Next</button>
+              <div class="small spinner-loader hidden">Loading…</div>
+            </th>
+          </tr>
+          </tfoot>
+        </table>
+      </v-grid>
+      <code demo-var="grid">
+        var grid = grid || document.querySelector("v-grid");
+
+        function loadData(page, count) {
+          grid.$$(".spinner-loader").classList.remove('hidden');
+
+          // Fetch the JSON data from a URL
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+              if (xhr.status == 200) {
+                var json = JSON.parse(xhr.responseText);
+                json.results.forEach(function(row, index){
+                  row.index = (page - 1) * count + index + 1;
+                });
+                grid.data.source = json.results;
+                grid.$$(".spinner-loader").classList.add('hidden');
+              }
+            }
+          };
+          xhr.open("GET", "http://api.randomuser.me/?results=" + count, true);
+          xhr.send();
+        }
+
+        window.addEventListener("WebComponentsReady", function() {
+          var count = 10;
+
+          loadData(1, count);
+
+        // code
+          grid.$$("#prev").addEventListener('click', function(e) {
+            var input = grid.$$("#page");
+            var value = parseInt(input.value);
+            if (value < parseInt(input.max)) {
+              var page = value - 1;
+              input.value = page;
+              loadData(page, count);
+            }
+            e.stopPropagation();
+          });
+
+          grid.$$("#next").addEventListener('click', function(e) {
+            var input = grid.$$("#page");
+            var value = parseInt(input.value);
+            if (value < parseInt(input.max)) {
+              var page = value + 1;
+              input.value = page;
+              loadData(page, count);
+            }
+            e.stopPropagation();
+          });
+
+          grid.$$("#page").addEventListener('input', function(e) {
+            if (this.validity.valid) {
+              loadData(parseInt(this.value), count);
+            }
+          });
+          // end-code
+
+          grid.$$("#page").addEventListener('click', function(e) {
+            e.stopPropagation();
+          });
+
+          // Add a renderer for the index column
+          grid.columns[0].renderer = function(cell) {
+            cell.element.innerHTML = cell.row.data.index;
+          };
+
+          // Add a renderer for the picture column
+          grid.columns[1].renderer = function(cell) {
+            cell.element.innerHTML = "";
+            var img = document.createElement("img");
+            img.style.width = "24px";
+            img.setAttribute("src", cell.data);
+            cell.element.appendChild(img);
+          };
         });
       </code>
     </code-example>
