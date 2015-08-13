@@ -42,27 +42,31 @@
               )
             },
 
-            componentDidMount: function(){
-              var vGrid = this.getDOMNode();
+            componentDidMount: function() {
+              var _this = this;
 
-              // Assign the data source
-              vGrid.data.source = this.dataSource;
+              // Let the mounted <v-grid> upgrade
+              Polymer.Async.run(function() {
+                var vGrid = _this.getDOMNode();
 
-              // Bind selection listener
-              vGrid.addEventListener("select", this.onRowSelect);
+                // Assign the data source
+                vGrid.data.source = _this.dataSource;
 
-              var pictureRenderer = function(cell) {
-                cell.element.innerHTML = "<img style='width: 30px' src='" + cell.data + "' />";
-              };
+                // Bind selection listener
+                vGrid.addEventListener("select", _this.onRowSelect);
 
-              // Define columns
-              vGrid.columns = [
-                {name: "user.picture.thumbnail", width: 100, renderer: pictureRenderer },
-                {name: "user.name.first", headerContent: "First Name" },
-                {name: "user.name.last", headerContent: "Last Name" },
-                {name: "user.email", headerContent: "Email" },
-              ];
+                var pictureRenderer = function(cell) {
+                  cell.element.innerHTML = "<img style='width: 30px' src='" + cell.data + "' />";
+                };
 
+                // Define columns
+                vGrid.columns = [
+                  {name: "user.picture.thumbnail", width: 100, renderer: pictureRenderer },
+                  {name: "user.name.first", headerContent: "First Name" },
+                  {name: "user.name.last", headerContent: "Last Name" },
+                  {name: "user.email", headerContent: "Email" },
+                ];
+              });
             },
 
             dataSource: function(req) {
@@ -112,7 +116,10 @@
             }
           });
 
-          React.render(<UserApp />, document.getElementById('reactdemo'));
+          HTMLImports.whenReady(function(){
+              React.render(<UserApp />, document.getElementById('reactdemo'));
+          });
+
         </script>
       </div>
     </code-example>
