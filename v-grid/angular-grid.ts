@@ -21,12 +21,16 @@ export class AngularGrid {
         .map(res => res.json().results)
         .subscribe(results => req.success(results, this.gender.value ? 50 : 100));
 
-    // Set a renderer for the picture column
-    this.grid.columns[0].renderer = cell =>
-      cell.element.innerHTML = "<img style='width: 30px' src='" + cell.data + "' />";
+    this.grid.then(() => {
+      // Set a renderer for the picture column
+      this.grid.columns[0].renderer = cell =>
+      cell.element.innerHTML = "<img style='width: 30px' src='" + cell.data + "' />"
 
-    // Add a new header row with the gender select in it
-    this.grid.then(() => this.grid.header.addRow(1, ["", this.gender]));
+      // Add a new header row with the gender select in it
+      this.grid.header.addRow(1, ["", this.gender]);
+    });
+
+
   }
 
   getUrl(gender: string, results: number) : string {
