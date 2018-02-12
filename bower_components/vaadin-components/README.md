@@ -35,10 +35,10 @@ We offer three ways to use Vaadin Components in your project: Bower, CDN and ZIP
 
 - ##### Bower
 
- We recommend using [Bower](http://bower.io) for managing your front-end dependencies. Follow the [Bower installation instructions](http://bower.io/#install-bower), the run the following command inside your project folder:
+ We recommend using [Bower](http://bower.io) for managing your front-end dependencies. Follow the [Bower installation instructions](http://bower.io/#install-bower), then run the following command inside your project folder:
 
  ```shell
- $ bower install --save vaadin-components#0.3.0-beta1
+ $ bower install --save vaadin-components#0.3.0-beta2
  ```
 
  This will download Vaadin Components and its dependencies to the `bower_components` folder inside your project&lsquo;s folder.
@@ -68,8 +68,8 @@ We offer three ways to use Vaadin Components in your project: Bower, CDN and ZIP
     <!-- Import Web Component polyfills and the components that you want -->
     
     <!-- CDN -->
-    <script src="https://cdn.vaadin.com/vaadin-components/0.3.0-beta1/webcomponentsjs/webcomponents-lite.js"></script>
-    <link href="https://cdn.vaadin.com/vaadin-components/0.3.0-beta1/vaadin-grid/vaadin-grid.html" rel="import">
+    <script src="https://cdn.vaadin.com/vaadin-components/0.3.0-beta2/webcomponentsjs/webcomponents-lite.js"></script>
+    <link href="https://cdn.vaadin.com/vaadin-components/0.3.0-beta2/vaadin-grid/vaadin-grid.html" rel="import">
     
     <!-- Bower -->
     <!-- <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
@@ -103,8 +103,8 @@ We offer three ways to use Vaadin Components in your project: Bower, CDN and ZIP
         // Fetch some JSON data from a URL
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-          if (xhr.readyState == XMLHttpRequest.DONE ) {
-            if(xhr.status == 200){
+          if (xhr.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status == 200) {
               var json = JSON.parse(xhr.responseText);
               
               // Use the returned data array directly as the data source
@@ -123,7 +123,7 @@ We offer three ways to use Vaadin Components in your project: Bower, CDN and ZIP
         
         // Add a renderer for the picture column
         grid.columns[1].renderer = function(cell) {
-            cell.element.innerHTML = '<img src="'+cell.data+'" style="width:24px;">';
+            cell.element.innerHTML = '<img src="' + cell.data + '" style="width: 24px;">';
         }
       });
     </script>

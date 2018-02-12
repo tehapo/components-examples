@@ -14,7 +14,7 @@
     "bower_components"
   ],
   "dependencies": {
-    "vaadin-components": "vaadin-components#0.3.0-beta1",
+    "vaadin-components": "vaadin-components#0.3.0-beta2",
     "code-example": "~0.0.12",
     "table-of-contents": "~0.0.1",
     "marked": "~0.3.3"
